@@ -1,13 +1,12 @@
-//============================================================================
-// Name        : barcodeDecoder.cpp
-// Author      : 
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Barcode Decoder for Code 39 C++, Ansi-style
-//============================================================================
-/*#include <Magick++.h>
+/*
+ * novelBarcodeDecorder.cpp
+ */
+#include <Magick++.h>
 #include <iostream>
 #include <string>
+#include "numberSystem.h"
+#include "fibonacciSystem.h"
+#include <assert.h>
 using namespace std;
 using namespace Magick;
 
@@ -17,6 +16,12 @@ struct histogramResult {
 	double max;
 	double min;
 };
+
+void PrintVector(vector<int> v){
+	for(size_t i = 0; i < v.size();i++)
+		cout<< v.at(i) << " ";
+	cout << "\n";
+}
 
 static histogramResult VerticalHistogram(Image image){
 	// Ensure that there are no other references to this image.
@@ -40,9 +45,7 @@ static histogramResult VerticalHistogram(Image image){
 		double avgPixelValue = 0;
 		for(size_t row = 0; row < nrows ; row++){
 			PixelPacket *pixel = pixel_cache+row*ncolumns + col;
-			//printf("%d %d %d\n",pixel->red, pixel->green, pixel->blue);
 			avgPixelValue += (pixel->red + pixel->green + pixel->blue);
-			*pixel = Color("blue");
 		}
 		avgPixelValue /= (nrows*3);
 		hist.histogram[col] = avgPixelValue;
@@ -51,33 +54,12 @@ static histogramResult VerticalHistogram(Image image){
 		} else if (avgPixelValue < hist.min){
 			hist.min = avgPixelValue;
 		}
-		//printf("average for col %d is %f\n", col, avgPixelValue);
 	}
-	//printf("min is %f max is %f\n", hist.min, hist.max);
-	// Save changes to underlying image .
-	image.syncPixels();
-	// Save updated image to file.
-	image.write("x4.gif");
 	return hist;
 }
 
-static string parsePattern(string pattern){
-	if(!pattern.compare("wnnwnnnnw")){
-		return "1";
-	} else if (!pattern.compare("nnwwnnnnw")){
-		return "2";
-	} else if (!pattern.compare("wnnnnwnnw")){
-		return "A";
-	} else if (!pattern.compare("nnnnwwnnw")){
-		return "D";
-	} else if (!pattern.compare("nnnnwnwwn")){
-		return "T";
-	} else {
-		return "*";
-	}
-}
 
-static string ReadCode39(Image image){
+static vector<int> ImageToBits(Image image){
 	// To find a horizontal barcode, find the vertical histogram to find individual barcodes,
 	// then get the vertical histogram to decode each
 	histogramResult vertHist = VerticalHistogram(image);
@@ -87,12 +69,11 @@ static string ReadCode39(Image image){
 	double threshold = vertHist.min + ((vertHist.max - vertHist.min)/2);
 
 	// Variables needed to check for
-	string patternString = "";
+	vector<int> pattern;
 	int nBarStart = -1;
 	int nNarrowBarWidth = -1;
+	int barWidthErrorThresh = -1;
 	bool bDarkBar = false;
-
-
 
 	// Find the narrow and wide bars
 	for (size_t i = 0; i < vertHist.length; ++i)
@@ -115,8 +96,9 @@ static string ReadCode39(Image image){
 				{
 					// We detected the end of first the dark bar, save the narrow bar width and
 					// start the rest of the barcode
-					nNarrowBarWidth = i - nBarStart + 1;
-					patternString += "n";
+					nNarrowBarWidth = i - nBarStart;
+					barWidthErrorThresh = nNarrowBarWidth/2;
+					pattern.push_back(1);
 					nBarStart = i;
 					bDarkBar = false;
 				}
@@ -129,18 +111,17 @@ static string ReadCode39(Image image){
 				// We're on a dark bar, detect when the bar becomes light again
 				if (vertHist.histogram[i] > threshold)
 				{
-					if ((i-nBarStart) > (nNarrowBarWidth))
+					int nPixels = i - nBarStart;
+					while(nPixels >= nNarrowBarWidth)
 					{
-						// The light bar was wider than the narrow bar width, it's a wide bar
-						patternString += "w";
-						nBarStart = i;
+						pattern.push_back(1);
+						nPixels -= nNarrowBarWidth;
 					}
-					else
-					{
-						// The light bar is a narrow bar
-						patternString += "n";
-						nBarStart = i;
+					//account for read error
+					if(nPixels >= nNarrowBarWidth - barWidthErrorThresh ) {
+						pattern.push_back(1);
 					}
+					nBarStart = i;
 					bDarkBar = false;
 				}
 			}
@@ -149,38 +130,43 @@ static string ReadCode39(Image image){
 				// We're on a light bar, detect when the bar becomes dark
 				if (vertHist.histogram[i] <= threshold)
 				{
-					if ((i-nBarStart) > (nNarrowBarWidth))
+					int nPixels = i - nBarStart;
+					while(nPixels >= nNarrowBarWidth)
 					{
-						// The dark bar was wider than the narrow bar width, it's a wide bar
-						patternString += "w";
-						nBarStart = i;
+						pattern.push_back(0);
+						nPixels -= nNarrowBarWidth;
 					}
-					else
-					{
-						// The dark bar is a narrow bar
-						patternString += "n";
-						nBarStart = i;
+					//account for read error
+					if(nPixels >= nNarrowBarWidth - barWidthErrorThresh ) {
+						pattern.push_back(0);
 					}
+					nBarStart = i;
 					bDarkBar = true;
 				}
 			}
 		}
 	}
-
-	// We now have a barcode in terms of narrow & wide bars... Parse it!
-	string dataString = "";
-
-	// Each pattern within code 39 is nine bars with one white bar between each pattern
-	for(size_t i=0; i<patternString.length()-1; i+=10)
-	{
-		string pattern = patternString.substr(i, 9);
-		dataString += parsePattern(pattern);
-	}
-
-	return dataString;
+	delete[] vertHist.histogram;
+	return pattern;
 }
 
+vector<int> BitsToData(vector<int> pattern, NumberSystem *sys){
+	int end = (int) pattern.size();
+	vector<int> *seq = sys->generateSequence(1, end);
+	PrintVector(*seq);
+	assert(pattern.size() == seq->size());
+	vector<int> data;
+	for(int i = 0; i < end; i++){
+		if(pattern.at(i)){
+			data.push_back(seq->at(i));
+		}
+	}
+	delete seq;
+	return data;
+}
 
+// currently reads in barcode, converts into bit string, and interprets as
+// fibonacci sequence
 int main(int argc,char **argv)
 {
 	// Construct the image object. Seperating image construction from the
@@ -196,10 +182,11 @@ int main(int argc,char **argv)
 		cout << "Caught exception: " << error_.what() << endl;
 		return 1;
 	}
-	string data = ReadCode39(image);
-	for(size_t i = 0; i < data.length(); i++){
-		printf("%c", data[i]);
-	}
+	vector<int> pattern = ImageToBits(image);
+	PrintVector(pattern);
+	Fibonacci *f = new Fibonacci(1,0);
+	vector<int> data = BitsToData(pattern, f);
+	PrintVector(data);
+	delete f;
 	return 0;
-}*/
-
+}
