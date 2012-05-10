@@ -1,0 +1,11 @@
+//To get the current directory
+#include <qdir.h>
+QDir currentDir = QDir::current();
+QString s = currentDir.currentPath();
+
+
+    // non working alternative to displaying image
+    // QGraphicsScene scene;
+    //QGraphicsPixmapItem item(QPixmap(ui->lineEdit->text()));
+    //scene.addItem(&item);
+    //ui->graphicsView->setScene(&scene);

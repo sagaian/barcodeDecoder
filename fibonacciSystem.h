@@ -1,7 +1,7 @@
 /*
  * fibonacciSystem.h
  */
-
+using namespace std;
 #ifndef FIBONACCISYSTEM_H_
 #define FIBONACCISYSTEM_H_
 
@@ -11,18 +11,15 @@
 class Fibonacci : public NumberSystem {
 private:
 	/* instance variables */
-	int p;
-	int op;
-	std::vector<int> *fibNumbers;
+	//vector<float> *sequence;
 	/* methods*/
-	int getFibNumber(int index);
-	void initList();
+	void initList(vector<float> *list, int p);
+	void generateSequence(int p, int start, int end, int op);
+	void generateSequence(int p, int maxValue, int op);
 public:
-	Fibonacci(int p);
-	Fibonacci(int p, int op);
-	~Fibonacci();
-	std::vector<int> *generateSequence(int start, int end);
-	void changeSystem(int i);
+	Fibonacci(int p, int maxValue, int op);
+	Fibonacci(int p, int start, int end, int op);
+	//vector<float> *getSequence();
 };
 
 #endif /* FIBONACCISYSTEM_H_ */

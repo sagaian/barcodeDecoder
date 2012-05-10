@@ -1,7 +1,10 @@
 /*
  * novelBarcodeDecorder.cpp
+ *
+ *  Created on: Apr 11, 2012
+ *      Author: sagaian
  */
-#include <Magick++.h>
+/*#include <Magick++.h>
 #include <iostream>
 #include <string>
 #include "numberSystem.h"
@@ -18,6 +21,12 @@ struct histogramResult {
 };
 
 void PrintVector(vector<int> v){
+	for(size_t i = 0; i < v.size();i++)
+		cout<< v.at(i) << " ";
+	cout << "\n";
+}
+
+void PrintVector(vector<float> v){
 	for(size_t i = 0; i < v.size();i++)
 		cout<< v.at(i) << " ";
 	cout << "\n";
@@ -150,12 +159,12 @@ static vector<int> ImageToBits(Image image){
 	return pattern;
 }
 
-vector<int> BitsToData(vector<int> pattern, NumberSystem *sys){
-	int end = (int) pattern.size();
-	vector<int> *seq = sys->generateSequence(1, end);
+vector<float> BitsToData(vector<int> pattern, NumberSystem *sys){
+	vector<float> *seq = sys->getSequence();
 	PrintVector(*seq);
-	assert(pattern.size() == seq->size());
-	vector<int> data;
+	int end = (int) pattern.size();
+	assert(end == (int) seq->size());
+	vector<float> data;
 	for(int i = 0; i < end; i++){
 		if(pattern.at(i)){
 			data.push_back(seq->at(i));
@@ -165,8 +174,6 @@ vector<int> BitsToData(vector<int> pattern, NumberSystem *sys){
 	return data;
 }
 
-// currently reads in barcode, converts into bit string, and interprets as
-// fibonacci sequence
 int main(int argc,char **argv)
 {
 	// Construct the image object. Seperating image construction from the
@@ -184,9 +191,8 @@ int main(int argc,char **argv)
 	}
 	vector<int> pattern = ImageToBits(image);
 	PrintVector(pattern);
-	Fibonacci *f = new Fibonacci(1,0);
-	vector<int> data = BitsToData(pattern, f);
+	Fibonacci f(1,1,(int) pattern.size());
+	vector<float> data = BitsToData(pattern, &f);
 	PrintVector(data);
-	delete f;
 	return 0;
-}
+}*/
