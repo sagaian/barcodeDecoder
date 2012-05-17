@@ -15,14 +15,17 @@ private:
 protected:
 	/* instance variable */
 	vector<float> *sequence;
+        int chunkSize;
 public:
 	//virtual vector<float> *getSequence() = 0;
 	vector<float> *getSequence();
 	void sanitizeSequence();
 	void getGreedyRepresentation(float number, vector<int> *greedy);
 	float getGreedyError();
-	void printGreedyAsString(vector<int> *greedy);
-	NumberSystem();
+        void printGreedyAsString(vector<int> *greedy);
+        int getChunkSize();
+        void setChunkSize(int size);
+        NumberSystem();
 };
 
 #endif /* NUMBERSYSTEM_H_ */

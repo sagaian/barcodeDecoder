@@ -14,6 +14,6 @@ class MultiBase : public NumberSystem {
 private:
 	void FuseSystem(NumberSystem *sys, int op);
 public:
-	MultiBase(int op, int count, ...);
+        MultiBase(int op, vector<NumberSystem>* systems);
 #endif /* MULTIBASE_H_ */
 };

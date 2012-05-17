@@ -16,15 +16,22 @@ SOURCES += main.cpp\
     numberSystem.cpp \
     novelBarcodeDecorder.cpp \
     fibonacciSystem.cpp \
-    barcodeDecoder.cpp
+    decoder.cpp \
+    greedyAlgorithm.cpp \
+    numbersystemwidget.cpp
 
 HEADERS  += mainwindow.h \
     fibonacciSystem.h \
     numberSystem.h \
     multiBase.h \
-    goldenRatioSystem.h
+    goldenRatioSystem.h \
+    histogramResult.h \
+    decoder.h \
+    greedyAlgorithm.h \
+    numbersystemwidget.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    numbersystemwidget.ui
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../../../../usr/local/lib/ -lMagick++
 

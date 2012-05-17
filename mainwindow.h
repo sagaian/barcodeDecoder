@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QLayout>
+#include "greedyAlgorithm.h"
 
 namespace Ui {
     class MainWindow;
@@ -20,7 +22,22 @@ private slots:
 
     void on_browseButton_released();
 
+    void on_saveBrowseButton_released();
+
+    void on_encodeButton_released();
+
+    void on_addSysButton_released();
+
+    void on_scrollArea_destroyed(QObject *arg1);
+
+    void convertInput(GreedyAlgorithm* g);
+
+    void generateBinary(GreedyAlgorithm* g);
+
+    void generateBarcode();
+
 private:
+    QVBoxLayout* layout;
     Ui::MainWindow *ui;
 };
 

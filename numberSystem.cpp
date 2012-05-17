@@ -13,6 +13,14 @@ vector<float> *NumberSystem::getSequence(){
 	return sequence;
 }
 
+void NumberSystem::setChunkSize(int size){
+    chunkSize = size;
+}
+
+int NumberSystem::getChunkSize(){
+    return chunkSize;
+}
+
 /*void NumberSystem::sanitizeSequence(vector<float> *seq){
 	set<int> uniqueTerms;
 	uniqueTerms.insert(0);
@@ -80,7 +88,12 @@ void NumberSystem::printGreedyAsString(vector<int> *greedy){
 float NumberSystem::getGreedyError(){
 	return error;
 }
+
 NumberSystem::NumberSystem(){
 	sequence = new vector<float>();
+        /******************************************************
+          TEMPORARY VALUE
+        ******************************************************/
+        chunkSize = 4;
 	error = 0;
 }

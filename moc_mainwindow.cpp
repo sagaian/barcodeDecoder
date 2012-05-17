@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu May 10 01:34:24 2012
+** Created: Thu May 17 03:47:46 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,6 +33,13 @@ static const uint qt_meta_data_MainWindow[] = {
  // slots: signature, parameters, type, tag, flags
       12,   11,   11,   11, 0x08,
       39,   11,   11,   11, 0x08,
+      66,   11,   11,   11, 0x08,
+      97,   11,   11,   11, 0x08,
+     124,   11,   11,   11, 0x08,
+     156,  151,   11,   11, 0x08,
+     192,  190,   11,   11, 0x08,
+     223,  190,   11,   11, 0x08,
+     256,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -40,6 +47,13 @@ static const uint qt_meta_data_MainWindow[] = {
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0on_decodeButton_released()\0"
     "on_browseButton_released()\0"
+    "on_saveBrowseButton_released()\0"
+    "on_encodeButton_released()\0"
+    "on_addSysButton_released()\0arg1\0"
+    "on_scrollArea_destroyed(QObject*)\0g\0"
+    "convertInput(GreedyAlgorithm*)\0"
+    "generateBinary(GreedyAlgorithm*)\0"
+    "generateBarcode()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -73,9 +87,15 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: on_decodeButton_released(); break;
         case 1: on_browseButton_released(); break;
+        case 2: on_saveBrowseButton_released(); break;
+        case 3: on_encodeButton_released(); break;
+        case 4: on_addSysButton_released(); break;
+        case 6: convertInput((*reinterpret_cast< GreedyAlgorithm*(*)>(_a[1]))); break;
+        case 7: generateBinary((*reinterpret_cast< GreedyAlgorithm*(*)>(_a[1]))); break;
+        case 8: generateBarcode(); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 9;
     }
     return _id;
 }

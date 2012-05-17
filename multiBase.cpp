@@ -30,18 +30,15 @@ void MultiBase::FuseSystem(NumberSystem *sys, int op){
 	*sequence = newSequence;
 }
 
-MultiBase::MultiBase(int op, int count, ...){
-	va_list systems;
-	va_start(systems, count);
-	for(int i = 0; i < count; ++i ){
-		NumberSystem *s = va_arg(systems, NumberSystem *);
+MultiBase::MultiBase(int op, vector<NumberSystem>* systems){
+        for(int i = 0; i < (int)systems->size(); ++i ){
+            NumberSystem *s = &(systems->at(i));
 		if(i == 0){
 			*sequence = *s->getSequence();
 		} else {
 			FuseSystem(s, op);
 		}
-	}
-	va_end(systems);
+        }
 }
 
 
