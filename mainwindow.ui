@@ -24,38 +24,29 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="Encoder">
      <attribute name="title">
       <string>Encoder</string>
      </attribute>
-     <widget class="QLabel" name="encodedBinaryLabel">
-      <property name="geometry">
-       <rect>
-        <x>470</x>
-        <y>350</y>
-        <width>51</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Binary</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="encodedBarcode">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>370</y>
-        <width>231</width>
-        <height>211</height>
+        <x>20</x>
+        <y>270</y>
+        <width>611</width>
+        <height>90</height>
        </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>90</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="text">
        <string/>
@@ -64,8 +55,8 @@
      <widget class="QLabel" name="encodedBarcodeLabel">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>350</y>
+        <x>20</x>
+        <y>240</y>
         <width>67</width>
         <height>21</height>
        </rect>
@@ -74,13 +65,462 @@
        <string>Barcode</string>
       </property>
      </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>520</y>
+        <width>611</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="outputLayout">
+         <property name="text">
+          <string>Terms</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="encodedOutputBox"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>470</y>
+        <width>611</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QLabel" name="encodedBinaryLabel">
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Binary</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="encodedBinaryBox"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QLineEdit" name="inputTextBox">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>100</y>
+        <width>611</width>
+        <height>111</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>611</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Input Data</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="modeSelection">
+         <item>
+          <property name="text">
+           <string>Numeric</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Alpha</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AlphaNumeric</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Security</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="horizontalSlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="encodeButton">
+         <property name="text">
+          <string>Encode</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="Line" name="line">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>220</y>
+        <width>611</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="lineWidth">
+       <number>2</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>380</y>
+        <width>611</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Security Pin</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_2"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="Line" name="line_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>420</y>
+        <width>611</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <property name="lineWidth">
+       <number>2</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>440</y>
+        <width>161</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Advanced Output Data</string>
+      </property>
+     </widget>
+     <zorder>layoutWidget</zorder>
+     <zorder>encodedBarcode</zorder>
+     <zorder>encodedBarcodeLabel</zorder>
+     <zorder>horizontalLayoutWidget</zorder>
+     <zorder>inputTextBox</zorder>
+     <zorder>horizontalLayoutWidget_2</zorder>
+     <zorder>line</zorder>
+     <zorder>horizontalLayoutWidget_3</zorder>
+     <zorder>line_2</zorder>
+     <zorder>label_6</zorder>
+    </widget>
+    <widget class="QWidget" name="Decoder">
+     <attribute name="title">
+      <string>Decoder</string>
+     </attribute>
+     <widget class="QLabel" name="picLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>130</y>
+        <width>261</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="decodeButton">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>510</y>
+        <width>131</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Decode Original</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="resultLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>410</y>
+        <width>601</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="enhanceButton">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>510</y>
+        <width>131</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Enhance</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="enhanceLabel">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>130</y>
+        <width>261</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>631</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>File</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="browseButton">
+         <property name="text">
+          <string>Browse</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>631</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string> Type</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="systemBox">
+         <item>
+          <property name="text">
+           <string>Fusion</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Code 39</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Input Data</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="modeSelection_Decoder">
+         <item>
+          <property name="text">
+           <string>Numeric</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Alpha</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AlphaNumeric</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Security Pin</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_3"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>380</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Output Data</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="decodeEnhancedButton">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>510</y>
+        <width>131</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Decode Enhanced</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Advanced Options</string>
+     </attribute>
+     <widget class="QWidget" name="layoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>320</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Fusion Operator</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="operatorSelection">
+         <item>
+          <property name="text">
+           <string>+</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>*</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addSysButton">
+         <property name="text">
+          <string>Add Number System</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QScrollArea" name="scrollArea">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>131</y>
+        <x>10</x>
+        <y>90</y>
         <width>591</width>
-        <height>111</height>
+        <height>141</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -104,312 +544,92 @@
          <x>0</x>
          <y>0</y>
          <width>576</width>
-         <height>109</height>
+         <height>139</height>
         </rect>
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QWidget" name="layoutWidget_3">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>15</y>
+        <x>19</x>
+        <y>290</y>
         <width>591</width>
-        <height>66</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QLabel" name="saveFileLabel">
-           <property name="text">
-            <string>File</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="saveLocationBox"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="saveBrowseButton">
-           <property name="text">
-            <string>Browse</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QLineEdit" name="inputTextBox"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="encodeButton">
-           <property name="text">
-            <string>Encode</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>90</y>
-        <width>479</width>
         <height>29</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QComboBox" name="modeSelection">
-         <item>
-          <property name="text">
-           <string>Numeric</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Alpha</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>AlphaNumeric</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="operatorSelection">
-         <item>
-          <property name="text">
-           <string>+</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>*</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="chunkSelection">
-         <item>
-          <property name="text">
-           <string>chunk</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>2</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>4</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>8</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="addSysButton">
+        <widget class="QLabel" name="saveFileLabel">
          <property name="text">
-          <string>Add Number System</string>
+          <string>File</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="saveLocationBox"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="saveBrowseButton">
+         <property name="text">
+          <string>Browse</string>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QTextEdit" name="encodedBinaryBox">
-      <property name="geometry">
-       <rect>
-        <x>380</x>
-        <y>370</y>
-        <width>231</width>
-        <height>211</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>260</y>
-        <width>591</width>
-        <height>80</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QLabel" name="outputLayout">
-         <property name="text">
-          <string>Output</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTextEdit" name="encodedOutputBox"/>
-       </item>
-      </layout>
-     </widget>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>encodedBinaryLabel</zorder>
-     <zorder>encodedBarcode</zorder>
-     <zorder>encodedBarcodeLabel</zorder>
-     <zorder>encodedBinaryBox</zorder>
-     <zorder>scrollArea</zorder>
-    </widget>
-    <widget class="QWidget" name="Decoder">
-     <attribute name="title">
-      <string>Decoder</string>
-     </attribute>
-     <widget class="QLabel" name="picLabel">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>190</y>
-        <width>261</width>
-        <height>221</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="decodeButton">
-      <property name="geometry">
-       <rect>
-        <x>190</x>
-        <y>470</y>
-        <width>97</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Decode</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="resultLabel">
-      <property name="geometry">
-       <rect>
-        <x>320</x>
-        <y>190</y>
-        <width>281</width>
-        <height>221</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="enhanceButton">
-      <property name="geometry">
-       <rect>
-        <x>350</x>
-        <y>470</y>
-        <width>97</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Enhance</string>
-      </property>
-      <property name="checkable">
-       <bool>false</bool>
-      </property>
-      <property name="autoDefault">
-       <bool>false</bool>
-      </property>
-      <property name="flat">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>90</x>
-        <y>80</y>
-        <width>111</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Number System</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="systemBox">
+     <widget class="QCheckBox" name="useAdvancedBox">
       <property name="geometry">
        <rect>
         <x>200</x>
-        <y>70</y>
-        <width>361</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <item>
-       <property name="text">
-        <string>Code 39</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Fibonacci</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QPushButton" name="browseButton">
-      <property name="geometry">
-       <rect>
-        <x>460</x>
-        <y>20</y>
-        <width>97</width>
-        <height>27</height>
+        <y>380</y>
+        <width>191</width>
+        <height>22</height>
        </rect>
       </property>
       <property name="text">
-       <string>Browse</string>
+       <string>Use Advanced Options</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="label_10">
       <property name="geometry">
        <rect>
-        <x>90</x>
-        <y>25</y>
-        <width>31</width>
+        <x>10</x>
+        <y>20</y>
+        <width>131</width>
         <height>17</height>
        </rect>
       </property>
       <property name="text">
-       <string>File</string>
+       <string>Customize Systems</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLabel" name="label_11">
       <property name="geometry">
        <rect>
-        <x>124</x>
-        <y>20</y>
-        <width>331</width>
-        <height>27</height>
+        <x>20</x>
+        <y>260</y>
+        <width>171</width>
+        <height>17</height>
        </rect>
       </property>
+      <property name="text">
+       <string>Set Encoder Directory</string>
+      </property>
      </widget>
+     <zorder>layoutWidget_2</zorder>
+     <zorder>scrollArea</zorder>
+     <zorder>layoutWidget_3</zorder>
+     <zorder>useAdvancedBox</zorder>
+     <zorder>label_10</zorder>
+     <zorder>label_11</zorder>
+     <zorder>saveLocationBox</zorder>
     </widget>
    </widget>
   </widget>

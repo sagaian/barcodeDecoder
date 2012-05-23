@@ -17,8 +17,11 @@ SOURCES += main.cpp\
     novelBarcodeDecorder.cpp \
     fibonacciSystem.cpp \
     decoder.cpp \
-    greedyAlgorithm.cpp \
-    numbersystemwidget.cpp
+    numbersystemwidget.cpp \
+    enhancer.cpp \
+    goldenRatioSystem.cpp \
+    chunker.cpp \
+    encoder.cpp
 
 HEADERS  += mainwindow.h \
     fibonacciSystem.h \
@@ -27,26 +30,28 @@ HEADERS  += mainwindow.h \
     goldenRatioSystem.h \
     histogramResult.h \
     decoder.h \
-    greedyAlgorithm.h \
-    numbersystemwidget.h
+    numbersystemwidget.h \
+    enhancer.h \
+    chunker.h \
+    encoder.h
 
 FORMS    += mainwindow.ui \
     numbersystemwidget.ui
 
-unix:!macx:!symbian: LIBS += -L$$PWD/../../../../usr/local/lib/ -lMagick++
+unix:!macx:!symbian: LIBS += -L$$PWD/../../../../../usr/local/lib/ -lMagick++
 
-INCLUDEPATH += $$PWD/../../../../usr/local/include/ImageMagick
-DEPENDPATH += $$PWD/../../../../usr/local/include/ImageMagick
+INCLUDEPATH += $$PWD/../../../../../usr/local/include/ImageMagick
+DEPENDPATH += $$PWD/../../../../../usr/local/include/ImageMagick
 
-unix:!macx:!symbian: LIBS += -L$$PWD/../../../../usr/local/lib/ -lMagickCore
+unix:!macx:!symbian: LIBS += -L$$PWD/../../../../../usr/local/lib/ -lMagickCore
 
-INCLUDEPATH += $$PWD/../../../../usr/local/include
-DEPENDPATH += $$PWD/../../../../usr/local/include
+INCLUDEPATH += $$PWD/../../../../../usr/local/include
+DEPENDPATH += $$PWD/../../../../../usr/local/include
 
-unix:!macx:!symbian: LIBS += -L$$PWD/../../../../usr/local/lib/ -lMagickWand
+unix:!macx:!symbian: LIBS += -L$$PWD/../../../../../usr/local/lib/ -lMagickWand
 
-INCLUDEPATH += $$PWD/../../../../usr/local/include
-DEPENDPATH += $$PWD/../../../../usr/local/include
+INCLUDEPATH += $$PWD/../../../../../usr/local/include
+DEPENDPATH += $$PWD/../../../../../usr/local/include
 
 OTHER_FILES += \
     sample_barcode_2.gif \

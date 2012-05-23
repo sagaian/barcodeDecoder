@@ -3,10 +3,13 @@
 
 #include <QMainWindow>
 #include <QLayout>
-#include "greedyAlgorithm.h"
+#include <vector>
+#include <numberSystem.h>
+#include <string>
+using namespace std;
 
 namespace Ui {
-    class MainWindow;
+class MainWindow;
 }
 
 class MainWindow : public QMainWindow
@@ -19,26 +22,23 @@ public:
 
 private slots:
     void on_decodeButton_released();
-
     void on_browseButton_released();
-
     void on_saveBrowseButton_released();
-
     void on_encodeButton_released();
-
     void on_addSysButton_released();
-
-    void on_scrollArea_destroyed(QObject *arg1);
-
-    void convertInput(GreedyAlgorithm* g);
-
-    void generateBinary(GreedyAlgorithm* g);
-
-    void generateBarcode();
+    void on_enhanceButton_released();
+    void on_decodeEnhancedButton_released();
 
 private:
     QVBoxLayout* layout;
     Ui::MainWindow *ui;
+    void getDefaultSystem(NumberSystem *sys, int upperLimit);
+    void getNumberSystem(NumberSystem *sys, int upperLimit);
+    // void convertInput(GreedyAlgorithm* g);
+    void generateBinary(float value, NumberSystem *sys, vector<int>*binary);
+    void generateBarcode(vector<int> *binary);
+    string decode(string path);
+    bool enhance(string path);
 };
 
 #endif // MAINWINDOW_H

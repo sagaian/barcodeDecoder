@@ -7,7 +7,6 @@
 #include "fibonacciSystem.h"
 #include <assert.h>
 
-
 using namespace std;
 using namespace Magick;
 
@@ -256,18 +255,25 @@ vector<int> Decoder::ImageToBits(Image* image){
             }
         }
     }
+    //in the case where last bar is black and hasn't yet been added...
+    //if(bDarkBar) pattern.push_back(1);
     delete[] vertHist.histogram;
     return pattern;
 }
 
 vector<float> Decoder::BitsToData(vector<int> pattern, NumberSystem *sys){
     vector<float> *seq = sys->getSequence();
-    int end = (int) pattern.size();
-    assert(end == (int) seq->size());
+    int end = (int) pattern.size() - 1;
+    //ensure you have enough terms; note pattern
+    //includes extra starting black/white bars
+    //as well as ending white(but not the
+    //ending black bars
+    assert(end - 2<= (int) seq->size());
     vector<float> data;
-    for(int i = 0; i < end; i++){
+    //ignore starting black and white bars
+    for(int i = 2; i < end; i++){
         if(pattern.at(i)){
-            data.push_back(seq->at(i));
+            data.push_back(seq->at(i-2));
         }
     }
     delete seq;
@@ -275,16 +281,15 @@ vector<float> Decoder::BitsToData(vector<int> pattern, NumberSystem *sys){
 }
 
 string Decoder::VectorToString(vector<float> *data){
-    stringstream resultString;
-    for(size_t i = 0; i < data->size(); i++){
-        resultString << data->at(i);
-    }
-    return resultString.str();
+    float total = 0;
+    for(size_t i = 0; i <data->size(); i++) total += data->at(i);
+    stringstream result;
+    result << total;
+    return result.str();
 }
 
-string Decoder::ReadFibonacci(Image* image){
+string Decoder::ReadFusion(Image* image, NumberSystem *sys){
     vector<int> pattern = ImageToBits(image);
-    Fibonacci f(1,1,(int) pattern.size(), 0);
-    vector<float> data = BitsToData(pattern, &f);
+    vector<float> data = BitsToData(pattern, sys);
     return VectorToString(&data);
 }

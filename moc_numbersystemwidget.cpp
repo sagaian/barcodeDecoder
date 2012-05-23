@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'numbersystemwidget.h'
 **
-** Created: Thu May 17 03:47:47 2012
+** Created: Tue May 22 00:15:30 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -32,14 +32,14 @@ static const uint qt_meta_data_numberSystemWidget[] = {
 
  // slots: signature, parameters, type, tag, flags
       20,   19,   19,   19, 0x08,
-      57,   47,   19,   19, 0x08,
+      53,   47,   19,   19, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_numberSystemWidget[] = {
     "numberSystemWidget\0\0on_removeButton_released()\0"
-    "arg1,arg2\0on_pValue_cursorPositionChanged(int,int)\0"
+    "index\0on_typeBox_currentIndexChanged(int)\0"
 };
 
 const QMetaObject numberSystemWidget::staticMetaObject = {
@@ -72,6 +72,7 @@ int numberSystemWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: on_removeButton_released(); break;
+        case 1: on_typeBox_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
         _id -= 2;

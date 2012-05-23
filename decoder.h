@@ -23,7 +23,7 @@ private:
     vector<int> ImageToBits(Image* image);
 public:
     string ReadCode39(Image* image);
-    string ReadFibonacci(Image* image);
+    string ReadFusion(Image* image, NumberSystem *sys);
 };
 
 #endif // DECODER_H

@@ -6,7 +6,7 @@ using namespace std;
 #ifndef NUMBERSYSTEM_H_
 #define NUMBERSYSTEM_H_
 #include <vector>
-
+#include <string>
 #define EPSILON .002
 
 class NumberSystem {
@@ -22,7 +22,7 @@ public:
 	void sanitizeSequence();
 	void getGreedyRepresentation(float number, vector<int> *greedy);
 	float getGreedyError();
-        void printGreedyAsString(vector<int> *greedy);
+        string getGreedyAsSum(vector<int> *greedy);
         int getChunkSize();
         void setChunkSize(int size);
         NumberSystem();

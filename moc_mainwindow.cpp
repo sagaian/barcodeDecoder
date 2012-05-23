@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu May 17 03:47:46 2012
+** Created: Tue May 22 02:33:23 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,10 +36,8 @@ static const uint qt_meta_data_MainWindow[] = {
       66,   11,   11,   11, 0x08,
       97,   11,   11,   11, 0x08,
      124,   11,   11,   11, 0x08,
-     156,  151,   11,   11, 0x08,
-     192,  190,   11,   11, 0x08,
-     223,  190,   11,   11, 0x08,
-     256,   11,   11,   11, 0x08,
+     151,   11,   11,   11, 0x08,
+     179,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -49,11 +47,9 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_browseButton_released()\0"
     "on_saveBrowseButton_released()\0"
     "on_encodeButton_released()\0"
-    "on_addSysButton_released()\0arg1\0"
-    "on_scrollArea_destroyed(QObject*)\0g\0"
-    "convertInput(GreedyAlgorithm*)\0"
-    "generateBinary(GreedyAlgorithm*)\0"
-    "generateBarcode()\0"
+    "on_addSysButton_released()\0"
+    "on_enhanceButton_released()\0"
+    "on_decodeEnhancedButton_released()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -90,12 +86,11 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 2: on_saveBrowseButton_released(); break;
         case 3: on_encodeButton_released(); break;
         case 4: on_addSysButton_released(); break;
-        case 6: convertInput((*reinterpret_cast< GreedyAlgorithm*(*)>(_a[1]))); break;
-        case 7: generateBinary((*reinterpret_cast< GreedyAlgorithm*(*)>(_a[1]))); break;
-        case 8: generateBarcode(); break;
+        case 5: on_enhanceButton_released(); break;
+        case 6: on_decodeEnhancedButton_released(); break;
         default: ;
         }
-        _id -= 9;
+        _id -= 7;
     }
     return _id;
 }

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'numbersystemwidget.ui'
 **
-** Created: Thu May 17 03:47:42 2012
+** Created: Mon May 21 23:39:37 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -32,17 +32,15 @@ public:
     QComboBox *operatorBox;
     QLabel *pLabel;
     QLineEdit *pValue;
-    QLabel *startLabel;
-    QLineEdit *startBox;
-    QLabel *endLabel;
-    QLineEdit *endBox;
+    QLabel *qLabel;
+    QLineEdit *qValue;
     QPushButton *removeButton;
 
     void setupUi(QWidget *numberSystemWidget)
     {
         if (numberSystemWidget->objectName().isEmpty())
             numberSystemWidget->setObjectName(QString::fromUtf8("numberSystemWidget"));
-        numberSystemWidget->resize(516, 50);
+        numberSystemWidget->resize(433, 50);
         horizontalLayout = new QHBoxLayout(numberSystemWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         typeBox = new QComboBox(numberSystemWidget);
@@ -75,33 +73,19 @@ public:
 
         horizontalLayout->addWidget(pValue);
 
-        startLabel = new QLabel(numberSystemWidget);
-        startLabel->setObjectName(QString::fromUtf8("startLabel"));
-        sizePolicy.setHeightForWidth(startLabel->sizePolicy().hasHeightForWidth());
-        startLabel->setSizePolicy(sizePolicy);
+        qLabel = new QLabel(numberSystemWidget);
+        qLabel->setObjectName(QString::fromUtf8("qLabel"));
+        sizePolicy.setHeightForWidth(qLabel->sizePolicy().hasHeightForWidth());
+        qLabel->setSizePolicy(sizePolicy);
 
-        horizontalLayout->addWidget(startLabel);
+        horizontalLayout->addWidget(qLabel);
 
-        startBox = new QLineEdit(numberSystemWidget);
-        startBox->setObjectName(QString::fromUtf8("startBox"));
-        sizePolicy1.setHeightForWidth(startBox->sizePolicy().hasHeightForWidth());
-        startBox->setSizePolicy(sizePolicy1);
+        qValue = new QLineEdit(numberSystemWidget);
+        qValue->setObjectName(QString::fromUtf8("qValue"));
+        sizePolicy1.setHeightForWidth(qValue->sizePolicy().hasHeightForWidth());
+        qValue->setSizePolicy(sizePolicy1);
 
-        horizontalLayout->addWidget(startBox);
-
-        endLabel = new QLabel(numberSystemWidget);
-        endLabel->setObjectName(QString::fromUtf8("endLabel"));
-        sizePolicy.setHeightForWidth(endLabel->sizePolicy().hasHeightForWidth());
-        endLabel->setSizePolicy(sizePolicy);
-
-        horizontalLayout->addWidget(endLabel);
-
-        endBox = new QLineEdit(numberSystemWidget);
-        endBox->setObjectName(QString::fromUtf8("endBox"));
-        sizePolicy1.setHeightForWidth(endBox->sizePolicy().hasHeightForWidth());
-        endBox->setSizePolicy(sizePolicy1);
-
-        horizontalLayout->addWidget(endBox);
+        horizontalLayout->addWidget(qValue);
 
         removeButton = new QPushButton(numberSystemWidget);
         removeButton->setObjectName(QString::fromUtf8("removeButton"));
@@ -120,7 +104,7 @@ public:
         typeBox->clear();
         typeBox->insertItems(0, QStringList()
          << QApplication::translate("numberSystemWidget", "Fibonacci", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("numberSystemWidget", "Power", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("numberSystemWidget", "Golden Ratio", 0, QApplication::UnicodeUTF8)
         );
         operatorBox->clear();
         operatorBox->insertItems(0, QStringList()
@@ -128,8 +112,7 @@ public:
          << QApplication::translate("numberSystemWidget", "*", 0, QApplication::UnicodeUTF8)
         );
         pLabel->setText(QApplication::translate("numberSystemWidget", "p:", 0, QApplication::UnicodeUTF8));
-        startLabel->setText(QApplication::translate("numberSystemWidget", "start:", 0, QApplication::UnicodeUTF8));
-        endLabel->setText(QApplication::translate("numberSystemWidget", "end:", 0, QApplication::UnicodeUTF8));
+        qLabel->setText(QApplication::translate("numberSystemWidget", "q", 0, QApplication::UnicodeUTF8));
         removeButton->setText(QApplication::translate("numberSystemWidget", "Remove", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

@@ -2,13 +2,15 @@
 #include "ui_numbersystemwidget.h"
 #include "numberSystem.h"
 #include "fibonacciSystem.h"
-
+#include "goldenRatioSystem.h"
+#include <iostream>
 numberSystemWidget::numberSystemWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::numberSystemWidget)
 {
     ui->setupUi(this);
-    status = false;
+    ui->pValue->setText(QString::fromStdString("1"));
+    ui->qValue->setText(QString::fromStdString("0"));
 }
 
 numberSystemWidget::~numberSystemWidget()
@@ -16,29 +18,46 @@ numberSystemWidget::~numberSystemWidget()
     delete ui;
 }
 
-NumberSystem numberSystemWidget::getNumberSystem(){
-    if(ui->pValue->text().isEmpty() || ui->startBox->text().isEmpty() || ui->endBox->text().isEmpty()){
-        status = false;
-        return Fibonacci(0,0,0,0);;
-    }else{
-        status = true;
-    }
+NumberSystem numberSystemWidget::getNumberSystem(int maxValue){
     int type = ui->typeBox->currentIndex();
     int op = ui->operatorBox->currentIndex();
-    int p = ui->pValue->text().toInt();
-    int start = ui->startBox->text().toInt();
-    int end = ui->endBox->text().toInt();
     switch(type){
-    default:
-        return Fibonacci(p,start,end,op);
+    case 1:{
+        float ratio = ui->pValue->text().isEmpty() ? 1.618 : ui->pValue->text().toFloat();
+        return GoldenRatio(maxValue, ratio);
     }
-}
-
-bool numberSystemWidget::isGood(){
-    return status;
+    default:
+        int p = ui->pValue->text().toInt();
+        int q = ui->qValue->text().isEmpty() ? 0 : ui->qValue->text().toInt();
+        return Fibonacci(p, maxValue, op);
+    }
 }
 
 void numberSystemWidget::on_removeButton_released()
 {
     delete(this);
+}
+
+void numberSystemWidget::on_typeBox_currentIndexChanged(int index)
+{
+    //set labels to
+    switch(index){
+    //Golden Ratio
+    case 1:
+        ui->pLabel->setText(QString::fromStdString("Ratio"));
+        ui->pValue->setText(QString::fromStdString("1.618"));
+        ui->operatorBox->setHidden(true);
+        ui->qLabel->setHidden(true);
+        ui->qValue->setHidden(true);
+        break;
+        //Fibonacci
+    default:
+        ui->pLabel->setText(QString::fromStdString("p"));
+        ui->qLabel->setHidden(false);
+        ui->pValue->setText(QString::fromStdString("1"));
+        ui->qValue->setHidden(false);
+        ui->qValue->setText(QString::fromStdString("0"));
+        ui->operatorBox->setHidden(false);
+    }
+
 }

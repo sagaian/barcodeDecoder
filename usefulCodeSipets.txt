@@ -4,8 +4,76 @@ QDir currentDir = QDir::current();
 QString s = currentDir.currentPath();
 
 
+string Decoder::VectorToString(vector<float> *data){
+//    stringstream resultString;
+//    for(size_t i = 0; i < data->size(); i++){
+//        resultString << data->at(i);
+//    }
+    float total = 0;
+    for(size_t i = 0; i <data->size(); i++) total += data->at(i);
+    stringstream result;
+    result << total;
+    return result.str();
+}
+
     // non working alternative to displaying image
     // QGraphicsScene scene;
     //QGraphicsPixmapItem item(QPixmap(ui->lineEdit->text()));
     //scene.addItem(&item);
     //ui->graphicsView->setScene(&scene);
+
+
+const char GreedyAlgorithm::Letters[alphaSize] = {'e','a','r', 'i', 'o', 't','n','s','l','c','u','d','p',
+                                                  'm','h','g','b','f','y','w','k','v','x','z','j','q', ' ',
+                                                  '(', ')', '@', '#', '&', '%', '!', '?','.', '+', '=','>','<',
+                                                  ':',';','-','_','*','^','$','{','}','/','\'','|','`','~', '[',']'};
+
+
+put in mainwindow -decoder segment
+
+// for debugging
+string MainWindow::Decode2(){
+    Image image;
+    try {
+        // Read a file into image object
+        image.read("encoded.gif");
+    }
+    catch( Exception &error_ )
+    {
+        cout << "Caught exception: " << error_.what() << endl;
+        return "";
+    }
+    // determine type of barcode to decode and get number system if needed
+    int index = ui->systemBox->currentIndex();
+    NumberSystem sys;
+    if(index == 0) getNumberSystem(&sys, 1000); //change later to chunk size
+
+    // decode output string
+    string result = Decode(&image, &sys, index );
+    ui->resultLabel->setText( QString::fromStdString(result));
+    return result;
+}
+
+void MainWindow::on_encodeButton_released()
+{
+    if(ui->inputTextBox->text().isEmpty()) return;
+    NumberSystem sys;
+    float num = ::atof(ui->inputTextBox->text().toStdString().c_str());
+    getNumberSystem(&sys, num);
+    vector<int> binary;
+    generateBinary(num, &sys, &binary);
+    generateBarcode(&binary);
+
+    // for debugging
+    /*for(int i = 1; i < 1000; i++){
+        cout << i << "\n";
+        vector<int> binary;
+        getNumberSystem(&sys, i);
+        generateBinary(i,&sys, &binary);
+        generateBarcode(&binary);
+        string result = Decode2();
+        ui->resultLabel->setText( QString::fromStdString(result));
+        assert(::atoi(result.c_str()) == i);
+    }*/
+
+}

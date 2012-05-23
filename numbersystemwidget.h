@@ -13,18 +13,15 @@ class numberSystemWidget : public QWidget
     Q_OBJECT
 
 public:
-    bool isGood();
-    NumberSystem getNumberSystem();
+    NumberSystem getNumberSystem(int maxValue);
     explicit numberSystemWidget(QWidget *parent = 0);
     ~numberSystemWidget();
 
 private slots:
     void on_removeButton_released();
-
-    void on_pValue_cursorPositionChanged(int arg1, int arg2);
+    void on_typeBox_currentIndexChanged(int index);
 
 private:
-    bool status;
     Ui::numberSystemWidget *ui;
 };
 

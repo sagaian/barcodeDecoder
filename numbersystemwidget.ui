@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>516</width>
+    <width>433</width>
     <height>50</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Power</string>
+       <string>Golden Ratio</string>
       </property>
      </item>
     </widget>
@@ -66,7 +66,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="startLabel">
+    <widget class="QLabel" name="qLabel">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -74,35 +74,12 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>start:</string>
+      <string>q</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="startBox">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="endLabel">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>end:</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLineEdit" name="endBox">
+    <widget class="QLineEdit" name="qValue">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
        <horstretch>0</horstretch>
