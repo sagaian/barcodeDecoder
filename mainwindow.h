@@ -33,12 +33,13 @@ private:
     QVBoxLayout* layout;
     Ui::MainWindow *ui;
     void getDefaultSystem(NumberSystem *sys, int upperLimit);
-    void getNumberSystem(NumberSystem *sys, int upperLimit);
+    void getNumberSystem(NumberSystem *sys, int upperLimit, bool isEncoder);
     // void convertInput(GreedyAlgorithm* g);
     void generateBinary(float value, NumberSystem *sys, vector<int>*binary);
     void generateBarcode(vector<int> *binary);
     string decode(string path);
     bool enhance(string path);
+    string Decode2();
 };
 
 #endif // MAINWINDOW_H

@@ -75,5 +75,181 @@ void MainWindow::on_encodeButton_released()
         ui->resultLabel->setText( QString::fromStdString(result));
         assert(::atoi(result.c_str()) == i);
     }*/
-
 }
+
+
+
+#include <encoder.h>
+#include <Magick++.h>
+#include <vector>
+#include <sstream>
+#include <cmath>
+
+using namespace std;
+using namespace Magick;
+
+// concats dimensions as string
+string Encoder::getDimensions(size_t ncols, size_t nrows){
+    stringstream s;
+    s << ncols << "x" << nrows;
+    return s.str();
+}
+
+string Encoder::VectorToString(vector<int> *data){
+    stringstream resultString;
+    for(size_t i = 0; i < data->size(); i++){
+        resultString << data->at(i);
+    }
+    return resultString.str();
+}
+
+
+void Encoder::encodeRow(PixelPacket *cache, vector<int> *rowBinary, size_t ncolumns){
+    for(size_t row = 0; row < MODULE_HEIGHT; row++){
+        for(size_t col = 0; col < ncolumns; col++){
+            if(col == 0 || col == ncolumns -1 || (col != 1 && col != ncolumns -2 && rowBinary->at(col - 2) == 1)){
+                for(size_t a = 0; a < MODULE_WIDTH; a++){
+                    PixelPacket *pixel = cache + row*ncolumns*MODULE_WIDTH + col*MODULE_WIDTH + a;
+                    pixel->blue = 0;
+                    pixel->red = 0;
+                    pixel->green = 0;
+                }
+            }
+        }
+    }
+}
+
+/** barcode starts with black and white bar, then bit pattern, then white, black bar*/
+void Encoder::EncodeBinary(vector<int> *binary, string path, size_t nrowz){
+    //size_t ncolumns = binary->size() + 4; //binary bits and starting/ending black and white bars
+
+    size_t nrows = ceil(sqrt(binary->size()));
+    size_t ncolumns = nrows;
+    vector<int> paddedBinary;
+    int index = 0;
+    for(size_t i = 0; i < nrows; i++){
+        for(size_t j = 0; j < ncolumns; j++){
+            if(index < binary->size()){
+                paddedBinary.push_back(binary->at(index));
+            } else {
+                paddedBinary.push_back(0);
+            }
+            index++;
+        }
+    }
+    ncolumns += 4;
+    Image encoded(getDimensions(ncolumns*MODULE_WIDTH,nrows*MODULE_HEIGHT), "white");
+    encoded.modifyImage();
+    PixelPacket *encoded_pixel_cache = encoded.getPixels(0,0,ncolumns*MODULE_WIDTH,nrows*MODULE_HEIGHT);
+    for(size_t row = 0; row < nrows; row++){
+        PixelPacket *nextRowCache = encoded_pixel_cache + row*ncolumns*MODULE_WIDTH*MODULE_HEIGHT;
+        vector<int> rowBinary(paddedBinary.begin() + row*(ncolumns-4), paddedBinary.begin() + row*(ncolumns-4) + ncolumns - 4);
+        encodeRow(nextRowCache, &rowBinary, ncolumns);
+    }
+
+
+    // Save changes to underlying image .
+    encoded.syncPixels();
+    // Save updated image to file.
+    encoded.write("encoded.gif");
+}
+
+
+==== in decoder.cpp (no chunking and reading data) ===
+
+string Decoder::ReadFusion(Image* image, NumberSystem *sys, BarcodeType type){
+    SetDimensions(image, type); //set reading dimensions
+    size_t startTerm = 0;
+    vector<float> allData; //binary from all rows
+    //decode row by row, if nrows= 1, decode only 1 row or dimension
+    for(size_t i = 0; i < nrows; i++){
+        vector<int> pattern = ImageToBits(image, i*TWO_D_HEIGHT);
+        vector<float> data = BitsToData(pattern, sys, &startTerm);
+        for(size_t j = 0; j < data.size(); j++) allData.push_back(data.at(j));
+
+    }
+    return VectorToString(&allData);
+}
+
+    /**
+    * Converts data bit pattern to vector of data terms;
+    * uses number system starting from startTerm
+    */
+    vector<float> BitsToData(vector<int> pattern, NumberSystem *sys, size_t *startTerm);
+
+/*vector<float> Decoder::BitsToData(vector<int> pattern, NumberSystem *sys, size_t *startTerm){
+    vector<float> *seq = sys->getSequence();
+    int end = (int) pattern.size() - 1; // pattern includes ending white but not the ending black bar
+    vector<float> data;
+    //ignore starting black and white bars
+    for(int i = 2; i < end; i++){
+        if(pattern.at(i)){
+            assert((i-2)+*startTerm < seq->size());
+            data.push_back(seq->at((i-2)+*startTerm));
+        }
+    }
+    *startTerm += end - 2;
+    return data;
+}*/
+
+
+vector<int> Compressor::CompressBitSequence(vector<int> bits, NumberSystem* sys){
+    /*for(int i =0; i< sys->sequence->size();i++){
+        vector<int> chunk = vector(bits.begin(), bits.begin()+sys->sequence->size());
+    }*/
+
+    vector< vector<int> > termSequences = getTermSequences(sys);
+    for(int i = 0; i < termSequences.size(); i++){
+        vector<int> sequence = termSequences.at(i);
+        //cout << i << "  ";
+        for(int j = 0; j < sequence.size(); j++){
+            cout << sequence.at(j) << ',';
+        }
+        cout <<endl;
+    }
+    map<int, int> mappy = getTermCounts(termSequences);
+    map<int,int>::iterator iter;
+    for( iter = mappy.begin(); iter != mappy.end(); iter++ ) {
+        cout << "index: " << iter->first << ", count: " << iter->second << endl;
+    }
+    vector<int> orderTerms = getTermOrder(mappy);
+    for(int i = 0; i <orderTerms.size(); i++){
+        cout << orderTerms.at(i) << ",";
+    }
+    cout << endl;
+
+    vector < vector<int> > bestSequences;
+    vector<int> v;
+    vector<int> scores;
+    GetBest(&bestSequences, &scores, v, 3);
+    for(int i = 0; i < bestSequences.size(); i++){
+        vector<int> s = bestSequences.at(i);
+        for(int j = 0; j < s.size(); j++){
+            cout << s.at(j) << " ";
+        }
+        cout << " with score" << scores.at(i) << endl;
+    }
+    map<int,vector<int> > encodings = getEncodingMapCompression(orderTerms, bestSequences);
+    map<int,vector<int> >::iterator iter2;
+    for( iter2 = encodings.begin(); iter2 != encodings.end(); iter2++ ) {
+        cout << "index: " << iter2->first << ", sequence: ";
+        vector<int> a = iter2->second;
+        for(int i = 0; i <a.size(); i++)
+            cout << a.at(i);
+        cout << endl;
+    }
+    vector<int> compressedBits;
+    for(int i = 0; i < bits.size(); i++){
+        if(bits.at(i)){
+            if(i != 0) compressedBits.push_back(1);
+            vector<int> compressedTerm = encodings.find(i)->second;
+            for(int j = 0; j < compressedTerm.size(); j++){
+                compressedBits.push_back(compressedTerm.at(j));
+            }
+
+        }
+    }
+    compressedBits.push_back(0);
+    return compressedBits;
+}
+

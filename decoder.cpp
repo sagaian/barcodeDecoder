@@ -6,18 +6,22 @@
 #include "numberSystem.h"
 #include "fibonacciSystem.h"
 #include <assert.h>
+#include "encoder.h"
+#include "chunker.h"
+#include "compressor.h"
 
 using namespace std;
 using namespace Magick;
 
 // =================== Image Statistics ============================
-histogramResult Decoder::VerticalHistogram(Image* image){
-    // Ensure that there are no other references to this image->
+histogramResult Decoder::VerticalHistogram(Image* image, size_t startingY){
+    // Ensure that there are no other references to this image
     image->modifyImage();
     // Set the image type to TrueColor DirectClass representation.
     image->type(TrueColorType);
     // Request pixel region with size nrows x ncolumns, and top origin at 0x0
-    size_t nrows = image->rows();
+    //size_t nrows = image->rows();
+    size_t nrows = moduleHeight;
     size_t ncolumns = image->columns();
 
     //create histogram
@@ -27,7 +31,7 @@ histogramResult Decoder::VerticalHistogram(Image* image){
     hist.max = 0;
     hist.min = Color("white").blueQuantum() + Color("white").redQuantum() + Color("white").greenQuantum();
 
-    PixelPacket *pixel_cache = image->getPixels(0,0,ncolumns,nrows);
+    PixelPacket *pixel_cache = image->getPixels(0,startingY,ncolumns,nrows);
     // Set each pixel in the cache to a fixed color.
     for(size_t col = 0; col < ncolumns; col++){
         double avgPixelValue = 0;
@@ -50,7 +54,8 @@ histogramResult Decoder::VerticalHistogram(Image* image){
 string Decoder::ReadCode39(Image* image){
     // To find a horizontal barcode, find the vertical histogram to find individual barcodes,
     // then get the vertical histogram to decode each
-    histogramResult vertHist = VerticalHistogram(image);
+    moduleHeight = ONE_D_HEIGHT;
+    histogramResult vertHist = VerticalHistogram(image, 0);
 
 
     // Set the threshold for determining dark/light bars to half way between the histograms min/max
@@ -168,10 +173,10 @@ string Decoder::parsePattern(string pattern){
 }
 
 // =================== Fibonacci ============================
-vector<int> Decoder::ImageToBits(Image* image){
+vector<int> Decoder::ImageToBits(Image* image, size_t startingY){
     // To find a horizontal barcode, find the vertical histogram to find individual barcodes,
     // then get the vertical histogram to decode each
-    histogramResult vertHist = VerticalHistogram(image);
+    histogramResult vertHist = VerticalHistogram(image, startingY);
 
 
     // Set the threshold for determining dark/light bars to half way between the histograms min/max
@@ -255,29 +260,13 @@ vector<int> Decoder::ImageToBits(Image* image){
             }
         }
     }
-    //in the case where last bar is black and hasn't yet been added...
-    //if(bDarkBar) pattern.push_back(1);
     delete[] vertHist.histogram;
     return pattern;
 }
 
-vector<float> Decoder::BitsToData(vector<int> pattern, NumberSystem *sys){
-    vector<float> *seq = sys->getSequence();
-    int end = (int) pattern.size() - 1;
-    //ensure you have enough terms; note pattern
-    //includes extra starting black/white bars
-    //as well as ending white(but not the
-    //ending black bars
-    assert(end - 2<= (int) seq->size());
-    vector<float> data;
-    //ignore starting black and white bars
-    for(int i = 2; i < end; i++){
-        if(pattern.at(i)){
-            data.push_back(seq->at(i-2));
-        }
-    }
-    delete seq;
-    return data;
+void Decoder::PatternToBinary(vector<int> *pattern, vector<int> *binary){
+     int end = (int) pattern->size() - 1; // pattern includes ending white but not the ending black bar
+     for(int i = 2; i < end; i++) binary->push_back(pattern->at(i)); //ignore starting black and white bars
 }
 
 string Decoder::VectorToString(vector<float> *data){
@@ -288,8 +277,28 @@ string Decoder::VectorToString(vector<float> *data){
     return result.str();
 }
 
-string Decoder::ReadFusion(Image* image, NumberSystem *sys){
-    vector<int> pattern = ImageToBits(image);
-    vector<float> data = BitsToData(pattern, sys);
-    return VectorToString(&data);
+void Decoder::SetDimensions(Image *image, BarcodeType type){
+    if(type == OneDimensional){
+        nrows = 1;
+        moduleHeight = ONE_D_HEIGHT;
+    } else {
+        nrows = image->rows() / TWO_D_HEIGHT;
+        moduleHeight = TWO_D_HEIGHT;
+    }
 }
+
+string Decoder::ReadFusion(Image* image, NumberSystem *sys, BarcodeType type){
+    SetDimensions(image, type); //set reading dimensions
+    vector<int> binary; //binary from all rows
+    for(size_t i = 0; i < nrows; i++){
+        vector<int> pattern = ImageToBits(image, i*TWO_D_HEIGHT);
+        PatternToBinary(&pattern, &binary);
+    }
+    Compressor compressor;
+    vector<int> uncompressedBinary = compressor.ExpandBitSequence(binary, sys);
+    Chunker chunker;
+    return chunker.GetNumberRepresentation(uncompressedBinary, sys);
+}
+
+/** Converts pixel pattern to bit pattern for a given row in image */
+vector<int> ImageToBits(Image* image, size_t startingY);

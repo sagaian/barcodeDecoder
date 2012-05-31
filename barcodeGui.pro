@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     enhancer.cpp \
     goldenRatioSystem.cpp \
     chunker.cpp \
-    encoder.cpp
+    encoder.cpp \
+    securer.cpp \
+    compressor.cpp
 
 HEADERS  += mainwindow.h \
     fibonacciSystem.h \
@@ -33,7 +35,9 @@ HEADERS  += mainwindow.h \
     numbersystemwidget.h \
     enhancer.h \
     chunker.h \
-    encoder.h
+    encoder.h \
+    securer.h \
+    compressor.h
 
 FORMS    += mainwindow.ui \
     numbersystemwidget.ui
@@ -57,4 +61,5 @@ OTHER_FILES += \
     sample_barcode_2.gif \
     usefulCodeSipets.txt \
     sample_barcode_2.gif \
-    sample_barcode.gif
+    sample_barcode.gif \
+    compcode.txt

@@ -5,6 +5,11 @@
 #include "multiBase.h"
 #include <vector>
 #include <iostream>
+#include <stdlib.h>
+#include <securer.h>
+#include <assert.h>
+#include <Magick++.h>
+#include <compressor.h>
 
 void PrintVector(vector<float>*seq){
     for(size_t i = 0; i < seq->size(); i++){
@@ -32,10 +37,13 @@ void TestSequences(){
 int main(int argc, char *argv[])
 {
     //TestSequences();
-    QApplication a(argc, argv);
+  QApplication a(argc, argv);
     MainWindow w;
     w.show();
     return a.exec();
+
+
+}
 
     //possible todo
     /*Fibonacci f(1, 10, 0);
@@ -44,4 +52,4 @@ int main(int argc, char *argv[])
     k = f;
     delete f.getSequence();
     return 0;*/
-}
+

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue May 22 02:44:21 2012
+** Created: Tue May 29 01:09:24 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -54,16 +54,18 @@ public:
     QLineEdit *inputTextBox;
     QWidget *horizontalLayoutWidget_2;
     QHBoxLayout *horizontalLayout_3;
+    QLabel *label_13;
+    QComboBox *typeSelection;
     QLabel *label_3;
     QComboBox *modeSelection;
     QLabel *label_4;
-    QSlider *horizontalSlider;
+    QSlider *securityValue;
     QPushButton *encodeButton;
     QFrame *line;
     QWidget *horizontalLayoutWidget_3;
     QHBoxLayout *horizontalLayout_7;
     QLabel *label_5;
-    QLineEdit *lineEdit_2;
+    QLineEdit *encoderPin;
     QFrame *line_2;
     QLabel *label_6;
     QWidget *Decoder;
@@ -84,7 +86,7 @@ public:
     QLabel *label_7;
     QComboBox *modeSelection_Decoder;
     QLabel *label_8;
-    QLineEdit *lineEdit_3;
+    QLineEdit *decoderPin;
     QLabel *label_9;
     QPushButton *decodeEnhancedButton;
     QWidget *tab;
@@ -130,7 +132,7 @@ public:
         encodedBarcodeLabel->setGeometry(QRect(20, 240, 67, 21));
         layoutWidget = new QWidget(Encoder);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(20, 520, 611, 31));
+        layoutWidget->setGeometry(QRect(20, 530, 611, 61));
         horizontalLayout_4 = new QHBoxLayout(layoutWidget);
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
@@ -148,7 +150,7 @@ public:
 
         horizontalLayoutWidget = new QWidget(Encoder);
         horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(20, 470, 611, 31));
+        horizontalLayoutWidget->setGeometry(QRect(20, 470, 611, 61));
         horizontalLayout_6 = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout_6->setSpacing(6);
         horizontalLayout_6->setContentsMargins(11, 11, 11, 11);
@@ -172,12 +174,22 @@ public:
         inputTextBox->setGeometry(QRect(20, 100, 611, 111));
         horizontalLayoutWidget_2 = new QWidget(Encoder);
         horizontalLayoutWidget_2->setObjectName(QString::fromUtf8("horizontalLayoutWidget_2"));
-        horizontalLayoutWidget_2->setGeometry(QRect(20, 10, 611, 80));
+        horizontalLayoutWidget_2->setGeometry(QRect(6, 10, 636, 80));
         horizontalLayout_3 = new QHBoxLayout(horizontalLayoutWidget_2);
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        label_13 = new QLabel(horizontalLayoutWidget_2);
+        label_13->setObjectName(QString::fromUtf8("label_13"));
+
+        horizontalLayout_3->addWidget(label_13);
+
+        typeSelection = new QComboBox(horizontalLayoutWidget_2);
+        typeSelection->setObjectName(QString::fromUtf8("typeSelection"));
+
+        horizontalLayout_3->addWidget(typeSelection);
+
         label_3 = new QLabel(horizontalLayoutWidget_2);
         label_3->setObjectName(QString::fromUtf8("label_3"));
 
@@ -193,11 +205,11 @@ public:
 
         horizontalLayout_3->addWidget(label_4);
 
-        horizontalSlider = new QSlider(horizontalLayoutWidget_2);
-        horizontalSlider->setObjectName(QString::fromUtf8("horizontalSlider"));
-        horizontalSlider->setOrientation(Qt::Horizontal);
+        securityValue = new QSlider(horizontalLayoutWidget_2);
+        securityValue->setObjectName(QString::fromUtf8("securityValue"));
+        securityValue->setOrientation(Qt::Horizontal);
 
-        horizontalLayout_3->addWidget(horizontalSlider);
+        horizontalLayout_3->addWidget(securityValue);
 
         encodeButton = new QPushButton(horizontalLayoutWidget_2);
         encodeButton->setObjectName(QString::fromUtf8("encodeButton"));
@@ -223,10 +235,10 @@ public:
 
         horizontalLayout_7->addWidget(label_5);
 
-        lineEdit_2 = new QLineEdit(horizontalLayoutWidget_3);
-        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
+        encoderPin = new QLineEdit(horizontalLayoutWidget_3);
+        encoderPin->setObjectName(QString::fromUtf8("encoderPin"));
 
-        horizontalLayout_7->addWidget(lineEdit_2);
+        horizontalLayout_7->addWidget(encoderPin);
 
         line_2 = new QFrame(Encoder);
         line_2->setObjectName(QString::fromUtf8("line_2"));
@@ -325,10 +337,10 @@ public:
 
         horizontalLayout_9->addWidget(label_8);
 
-        lineEdit_3 = new QLineEdit(horizontalLayoutWidget_5);
-        lineEdit_3->setObjectName(QString::fromUtf8("lineEdit_3"));
+        decoderPin = new QLineEdit(horizontalLayoutWidget_5);
+        decoderPin->setObjectName(QString::fromUtf8("decoderPin"));
 
-        horizontalLayout_9->addWidget(lineEdit_3);
+        horizontalLayout_9->addWidget(decoderPin);
 
         label_9 = new QLabel(Decoder);
         label_9->setObjectName(QString::fromUtf8("label_9"));
@@ -409,13 +421,6 @@ public:
         label_11->setObjectName(QString::fromUtf8("label_11"));
         label_11->setGeometry(QRect(20, 260, 171, 17));
         tabWidget->addTab(tab, QString());
-        layoutWidget_2->raise();
-        scrollArea->raise();
-        layoutWidget_3->raise();
-        useAdvancedBox->raise();
-        label_10->raise();
-        label_11->raise();
-        saveLocationBox->raise();
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -447,7 +452,13 @@ public:
         encodedBarcodeLabel->setText(QApplication::translate("MainWindow", "Barcode", 0, QApplication::UnicodeUTF8));
         outputLayout->setText(QApplication::translate("MainWindow", "Terms", 0, QApplication::UnicodeUTF8));
         encodedBinaryLabel->setText(QApplication::translate("MainWindow", "Binary", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("MainWindow", "Input Data", 0, QApplication::UnicodeUTF8));
+        label_13->setText(QApplication::translate("MainWindow", "Type", 0, QApplication::UnicodeUTF8));
+        typeSelection->clear();
+        typeSelection->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "1D", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "2D", 0, QApplication::UnicodeUTF8)
+        );
+        label_3->setText(QApplication::translate("MainWindow", " Data", 0, QApplication::UnicodeUTF8));
         modeSelection->clear();
         modeSelection->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "Numeric", 0, QApplication::UnicodeUTF8)
@@ -469,7 +480,8 @@ public:
         label_2->setText(QApplication::translate("MainWindow", " Type", 0, QApplication::UnicodeUTF8));
         systemBox->clear();
         systemBox->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "Fusion", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "Fuse 1D", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "Fuse 2D", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("MainWindow", "Code 39", 0, QApplication::UnicodeUTF8)
         );
         label_7->setText(QApplication::translate("MainWindow", "Input Data", 0, QApplication::UnicodeUTF8));

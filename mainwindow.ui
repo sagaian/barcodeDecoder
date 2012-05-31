@@ -69,9 +69,9 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>520</y>
+        <y>530</y>
         <width>611</width>
-        <height>31</height>
+        <height>61</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -93,7 +93,7 @@
         <x>20</x>
         <y>470</y>
         <width>611</width>
-        <height>31</height>
+        <height>61</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -127,17 +127,38 @@
      <widget class="QWidget" name="horizontalLayoutWidget_2">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>6</x>
         <y>10</y>
-        <width>611</width>
+        <width>636</width>
         <height>80</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Type</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="typeSelection">
+         <item>
+          <property name="text">
+           <string>1D</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>2D</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Input Data</string>
+          <string> Data</string>
          </property>
         </widget>
        </item>
@@ -168,7 +189,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="horizontalSlider">
+        <widget class="QSlider" name="securityValue">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -217,7 +238,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_2"/>
+        <widget class="QLineEdit" name="encoderPin"/>
        </item>
       </layout>
      </widget>
@@ -395,7 +416,12 @@
         <widget class="QComboBox" name="systemBox">
          <item>
           <property name="text">
-           <string>Fusion</string>
+           <string>Fuse 1D</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Fuse 2D</string>
           </property>
          </item>
          <item>
@@ -439,7 +465,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_3"/>
+        <widget class="QLineEdit" name="decoderPin"/>
        </item>
       </layout>
      </widget>
@@ -623,13 +649,6 @@
        <string>Set Encoder Directory</string>
       </property>
      </widget>
-     <zorder>layoutWidget_2</zorder>
-     <zorder>scrollArea</zorder>
-     <zorder>layoutWidget_3</zorder>
-     <zorder>useAdvancedBox</zorder>
-     <zorder>label_10</zorder>
-     <zorder>label_11</zorder>
-     <zorder>saveLocationBox</zorder>
     </widget>
    </widget>
   </widget>

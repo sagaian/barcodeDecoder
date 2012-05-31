@@ -34,11 +34,11 @@ int NumberSystem::getChunkSize(){
 void NumberSystem::sanitizeSequence(){
     //sort and skip 0 terms
     sort(sequence->begin(), sequence->end());
-    int start = 0;
-    while(true){
+   int start = 0;
+   /* while(true){
         if(sequence->at(start) > 0) break;
         start++;
-    }
+    }*/
 
     // extract unique terms from remaining sequence
     size_t size = sequence->size();
