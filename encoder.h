@@ -7,7 +7,7 @@
 using namespace std;
 using namespace Magick;
 
-#define ONE_D_WIDTH 1 // width (pixels) of 1D white/black bar
+#define ONE_D_WIDTH 2 // width (pixels) of 1D white/black bar
 #define ONE_D_HEIGHT 98 // height (pixels) of 1D white/black bar
 #define TWO_D_WIDTH 5 // width (pixels) of 2D white/black bar
 #define TWO_D_HEIGHT 5 // height (pixels) of 2D white/black bar

@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QTabWidget" name="Analytics_2">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -46,10 +46,16 @@
        </size>
       </property>
       <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+       <enum>QFrame::WinPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QLabel" name="encodedBarcodeLabel">
@@ -65,35 +71,13 @@
        <string>Barcode</string>
       </property>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>530</y>
-        <width>611</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QLabel" name="outputLayout">
-         <property name="text">
-          <string>Terms</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTextEdit" name="encodedOutputBox"/>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="horizontalLayoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>470</y>
         <width>611</width>
-        <height>61</height>
+        <height>80</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -113,16 +97,6 @@
         <widget class="QTextEdit" name="encodedBinaryBox"/>
        </item>
       </layout>
-     </widget>
-     <widget class="QLineEdit" name="inputTextBox">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>100</y>
-        <width>611</width>
-        <height>111</height>
-       </rect>
-      </property>
      </widget>
      <widget class="QWidget" name="horizontalLayoutWidget_2">
       <property name="geometry">
@@ -274,16 +248,41 @@
        <string>Advanced Output Data</string>
       </property>
      </widget>
-     <zorder>layoutWidget</zorder>
-     <zorder>encodedBarcode</zorder>
-     <zorder>encodedBarcodeLabel</zorder>
-     <zorder>horizontalLayoutWidget</zorder>
-     <zorder>inputTextBox</zorder>
-     <zorder>horizontalLayoutWidget_2</zorder>
-     <zorder>line</zorder>
-     <zorder>horizontalLayoutWidget_3</zorder>
-     <zorder>line_2</zorder>
-     <zorder>label_6</zorder>
+     <widget class="QLineEdit" name="inputTextBox">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>100</y>
+        <width>611</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+     <widget class="QLabel" name="encodeErrorLabel">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>560</y>
+        <width>131</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string>CANNOT ENCODE</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="Decoder">
      <attribute name="title">
@@ -297,6 +296,15 @@
         <width>261</width>
         <height>221</height>
        </rect>
+      </property>
+      <property name="accessibleDescription">
+       <string/>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
       </property>
       <property name="text">
        <string/>
@@ -313,22 +321,6 @@
       </property>
       <property name="text">
        <string>Decode Original</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="resultLabel">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>410</y>
-        <width>601</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="enhanceButton">
@@ -384,7 +376,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit"/>
+        <widget class="QLineEdit" name="lineEdit">
+         <property name="text">
+          <string>/home/sagaian/Desktop/cs194/barcodeDecoder2/encoded.gif</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="browseButton">
@@ -495,8 +491,24 @@
        <string>Decode Enhanced</string>
       </property>
      </widget>
+     <widget class="QLineEdit" name="resultLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>410</y>
+        <width>601</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="dragEnabled">
+       <bool>false</bool>
+      </property>
+      <property name="readOnly">
+       <bool>false</bool>
+      </property>
+     </widget>
     </widget>
-    <widget class="QWidget" name="tab">
+    <widget class="QWidget" name="Advanced_Options">
      <attribute name="title">
       <string>Advanced Options</string>
      </attribute>
@@ -648,6 +660,184 @@
       <property name="text">
        <string>Set Encoder Directory</string>
       </property>
+     </widget>
+     <widget class="QLabel" name="systemErrorLabel">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>420</y>
+        <width>121</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string>INVALID SYSTEM</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="Analytics">
+     <attribute name="title">
+      <string>Analytics</string>
+     </attribute>
+     <widget class="QWidget" name="layoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>90</y>
+        <width>261</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_11">
+       <item>
+        <widget class="QLineEdit" name="directory_fusion"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="brows_fusion">
+         <property name="text">
+          <string>Browse</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QLabel" name="barcode_code39">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>140</y>
+        <width>261</width>
+        <height>211</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::WinPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_15">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>60</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Code 39</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="barcode_fusion">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>140</y>
+        <width>261</width>
+        <height>211</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::WinPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_fusion">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>60</y>
+        <width>151</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Fusion Code</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_code39_length">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>390</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Length:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_fusion_length">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>390</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Length:</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>90</y>
+        <width>261</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="label_code39">
+       <item>
+        <widget class="QLineEdit" name="directory_code39">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="browse_code39">
+         <property name="text">
+          <string>Browse</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>

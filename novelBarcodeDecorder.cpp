@@ -163,14 +163,13 @@ vector<float> BitsToData(vector<int> pattern, NumberSystem *sys){
 	vector<float> *seq = sys->getSequence();
 	PrintVector(*seq);
 	int end = (int) pattern.size();
-	assert(end == (int) seq->size());
+        //assert(end == (int) seq->size());
 	vector<float> data;
 	for(int i = 0; i < end; i++){
 		if(pattern.at(i)){
 			data.push_back(seq->at(i));
 		}
 	}
-	delete seq;
 	return data;
 }
 

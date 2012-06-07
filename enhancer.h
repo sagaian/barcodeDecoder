@@ -10,6 +10,7 @@ using namespace Magick;
 #define MU 500.0
 #define LAMDA -300.0
 #define BETA 3.0
+#define ERROR_STRING3 "CANNOT ENHANCE"
 
 class Enhancer{
 private:

@@ -11,15 +11,7 @@ using namespace std;
 #include <sstream>
 
 vector<float> *NumberSystem::getSequence(){
-    return sequence;
-}
-
-void NumberSystem::setChunkSize(int size){
-    chunkSize = size;
-}
-
-int NumberSystem::getChunkSize(){
-    return chunkSize;
+    return &sequence;
 }
 
 /*void NumberSystem::sanitizeSequence(vector<float> *seq){
@@ -33,46 +25,67 @@ int NumberSystem::getChunkSize(){
 
 void NumberSystem::sanitizeSequence(){
     //sort and skip 0 terms
-    sort(sequence->begin(), sequence->end());
-   int start = 0;
-   /* while(true){
+    sort(sequence.begin(), sequence.end());
+    int start = 0;
+    /* while(true){
         if(sequence->at(start) > 0) break;
         start++;
     }*/
 
     // extract unique terms from remaining sequence
-    size_t size = sequence->size();
+    size_t size = sequence.size();
     vector<float> uniqueTerms;
     int index = 0;
-    uniqueTerms.push_back(sequence->at(start));
+    uniqueTerms.push_back(sequence.at(start));
     //this is similar to unique(sequence->begin(), sequence->end()), but with an error threshold;
     for(size_t i = start + 1; i < size; i++){
-        float nextTerm = sequence->at(i);
+        float nextTerm = sequence.at(i);
         if(nextTerm - uniqueTerms.at(index) > EPSILON){
             index++;
             uniqueTerms.push_back(nextTerm);
         }
     }
-    *sequence = uniqueTerms;
+    sequence = uniqueTerms;
 }
+
+//void NumberSystem::getGreedyRepresentation(float number, vector<int> *greedy){
+//    float remaining = number;
+//    int size = sequence->size();
+//    int greedyTerms[size];
+//    for(int i = size - 1; i >= 0; i--){
+//        float curr = sequence->at(i);
+//        if((curr - remaining) <= EPSILON){
+//            greedyTerms[i] = 1;
+//            remaining -= curr;
+//        } else {
+//            greedyTerms[i] = 0;
+//        }
+//    }
+//    greedy->assign(greedyTerms, greedyTerms + size);
+//    error = remaining;
+//}
 
 void NumberSystem::getGreedyRepresentation(float number, vector<int> *greedy){
     float remaining = number;
-    int size = sequence->size();
+    int size = sequence.size();
     int greedyTerms[size];
-    for(int i = size - 1; i >= 0; i--){
-        float curr = sequence->at(i);
-        if((curr - remaining) <= EPSILON){
-            greedyTerms[i] = 1;
-            remaining -= curr;
-        } else {
-            greedyTerms[i] = 0;
+    for(int i = 0; i < size; i++) greedyTerms[i] = 0;
+    if(number == 0){
+         greedyTerms[0] = 1;
+    }else{
+        for(int i = size - 1; i > 0; i--){
+            float curr = sequence.at(i);
+            if((curr - remaining) <= EPSILON){
+                greedyTerms[i] = 1;
+                remaining -= curr;
+            } else {
+                greedyTerms[i] = 0;
+            }
         }
     }
     greedy->assign(greedyTerms, greedyTerms + size);
     error = remaining;
 }
-
 
 string NumberSystem::getGreedyAsSum(vector<int> *greedy){
     int nTerms = 0;
@@ -81,7 +94,7 @@ string NumberSystem::getGreedyAsSum(vector<int> *greedy){
         int nextTerm = greedy->at(i);
         if(nextTerm == 1){
             if(nTerms != 0) resultString << '+';
-            resultString << sequence->at(i);
+            resultString << sequence.at(i);
             nTerms++;
         }
     }
@@ -92,11 +105,10 @@ float NumberSystem::getGreedyError(){
     return error;
 }
 
+string NumberSystem::getDescription(){
+   return description;
+}
+
 NumberSystem::NumberSystem(){
-    sequence = new vector<float>();
-    /******************************************************
-          TEMPORARY VALUE
-        ******************************************************/
-    chunkSize = 4;
     error = 0;
 }

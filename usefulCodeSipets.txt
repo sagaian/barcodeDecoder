@@ -73,7 +73,7 @@ void MainWindow::on_encodeButton_released()
         generateBarcode(&binary);
         string result = Decode2();
         ui->resultLabel->setText( QString::fromStdString(result));
-        assert(::atoi(result.c_str()) == i);
+        //assert(::atoi(result.c_str()) == i);
     }*/
 }
 

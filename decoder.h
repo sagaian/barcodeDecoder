@@ -44,7 +44,7 @@ private:
     histogramResult VerticalHistogram(Image* image, size_t startingY);
 
     /** Converts pixel pattern to bit pattern for a given row in image */
-    vector<int> ImageToBits(Image* image, size_t startingY);
+    vector<int> ImageToBits(histogramResult *vertHist);
 
     /** Converts pixel pattern to binary pattern for chunker */
     void PatternToBinary(vector<int> *pattern, vector<int> *binary);

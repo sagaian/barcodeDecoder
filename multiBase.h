@@ -13,7 +13,8 @@ using namespace std;
 class MultiBase : public NumberSystem {
 private:
 	void FuseSystem(NumberSystem *sys, int op);
+        void setDescription(int op, vector<NumberSystem>* systems);
 public:
         MultiBase(int op, vector<NumberSystem>* systems);
-#endif /* MULTIBASE_H_ */
 };
+#endif /* MULTIBASE_H_ */

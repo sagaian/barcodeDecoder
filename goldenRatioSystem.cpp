@@ -10,7 +10,7 @@ using namespace std;
 
 void GoldenRatio::generateSequence(int start, int end, float ratio){
     for(int i = start; i <= end; i++){
-        sequence->push_back((float)pow(ratio, i));
+        sequence.push_back((float)pow(ratio, i));
     }
 }
 
@@ -20,7 +20,7 @@ void GoldenRatio::generateSequence(int maxValue, float ratio){
     while(true){
         float nextTerm = (float)pow(ratio, i);
         if(nextTerm > maxValue) break;
-        sequence->push_back(nextTerm);
+        sequence.push_back(nextTerm);
         i++;
     }
 }

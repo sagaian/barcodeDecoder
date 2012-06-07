@@ -89,10 +89,10 @@ void Enhancer::EnhanceImage(Image image, NumberSystem *sys){
     PixelPacket *enhanced_pixel_cache = enhanced.getPixels(0,0,ncolumns,nrows);
     for(size_t row = 0; row < nrows ; row++){
         for(size_t col = 0; col < ncolumns; col++){
-            assert(max != min);
+            //assert(max != min);
             float pixel8= 255*(mulp[row][col] - min)/ (max - min);
             float pixel16 = pixel8 * 256;
-            assert(pixel16 <= MAX_VALUE * 256);
+            //assert(pixel16 <= MAX_VALUE * 256);
             PixelPacket *pixel = enhanced_pixel_cache + row*ncolumns + col;
             pixel->blue = pixel16;
             pixel->red = pixel16;

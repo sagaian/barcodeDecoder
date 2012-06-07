@@ -7,6 +7,8 @@
 
 using namespace std;
 
+const size_t Chunker::maxSeqValue = pow(10, CHUNK_SIZE)-1;
+
 //Encoder
 float Chunker::StringToFloat(string number){
     float result = 0;
@@ -81,6 +83,7 @@ vector< vector<int> > Chunker::ChunksToBits(vector<float> chunks, NumberSystem* 
     }
     return bitChunks;
 }
+
 vector<int> Chunker::GetBitRepresentation(string number, NumberSystem *sys){
     vector<float> chunks = NumberToChunks(number);
     vector< vector<int> > bitChunks = ChunksToBits(chunks, sys);

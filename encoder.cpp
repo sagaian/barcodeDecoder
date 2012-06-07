@@ -36,7 +36,6 @@ void Encoder::getPaddedBinary(vector<int> *binary, vector<int> *paddedBinary){
                 paddedBinary->push_back(binary->at(index));
             } else {
                 paddedBinary->push_back(0);
-                cout<<"pushed"<<endl;
             }
             index++;
         }

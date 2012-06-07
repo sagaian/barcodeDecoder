@@ -3,10 +3,10 @@
 #include <string>
 #include <numberSystem.h>
 
-#define MAX_SYSTEMS 2 // number of systems up to and including MAX_SYSTEMS
-#define MAX_CHUNK 999 //values up to and including LIMIT_CHUNK
-#define MAX_P 5 //values of p up to and including MAX_P, i.e MAX_P = 2 allows p = 0,1,2
-#define MAX_Q 2 //values of q up to and including MAX_Q
+#define MAX_SYSTEMS 3 // number of systems up to and including MAX_SYSTEMS
+#define MAX_P 9 //values of p up to and including MAX_P, i.e MAX_P = 2 allows p = 0,1,2
+#define MAX_Q 9 //values of q up to and including MAX_Q
+#define PIN_CHUNK 4
 
 class Securer{
 private:
@@ -15,7 +15,7 @@ private:
     string encodeGoldenPin(float ratio);
     void generateRandomFibonacci(NumberSystem *sys);
     void generateRandomRatio(NumberSystem *sys);
-    void generateRandomMultiBase(NumberSystem *sys);
+    void generateRandomMultiBase(NumberSystem *sys, int nSystems);
     void ratioPinToSystem(string pin, NumberSystem *sys);
     void fibonacciPinToSystem(string pin, NumberSystem *sys);
 public:

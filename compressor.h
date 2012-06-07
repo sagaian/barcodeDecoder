@@ -12,22 +12,38 @@ using namespace std;
 
 class Compressor {
 private:
+    static const size_t seqLen;
+
     /* bit strings */
-    int ScoreBitSequence(vector<int> bits);
-    bool isUsableSequence(vector<int> bits);
-    void GetBestSequences(vector<vector<int> > *bitsequences, vector<int> *scores, vector<int> sequence, size_t size);
+    static const vector< vector<int> > bestSequences;
+    static int ScoreBitSequence(vector<int> *bits);
+    static bool isUsableSequence(vector<int> *bits);
+    static void GetBestSequences(vector<vector<int> > *bitsequences, vector<int> *scores, vector<int> sequence);
+    static vector<vector<int> > GetBestSequencesWrapper();
 
     /* term order*/
-    vector< vector<int> > getTermSequences(NumberSystem* sys);
-    map<int,int> getTermCounts(vector< vector<int> > bitSequences);
-    vector<int> getTermOrder(map<int,int> termCounts);
+    static vector< vector<int> > getTermSequences(NumberSystem* sys);
+    static map<int,int> getTermCounts(vector< vector<int> > *bitSequences);
+    static vector<int> getTermOrder(map<int,int> termCounts);
+    static vector<int> GetOrderedTerms(NumberSystem *sys);
 
     /* encoding map */
-    map<int, vector<int> > getEncodingMapCompression(vector<int> terms, vector< vector<int> > bitSequences);
-    map<vector<int>,int > getEncodingMapExpansion(vector<int> terms, vector< vector<int> > bitSequences);
+    static map<int, vector<int> > getEncodingMapCompression(vector<int> *terms);
+    static map<vector<int>,int > getEncodingMapExpansion(vector<int> *terms);
+
 public:
-    vector<int> CompressBitSequence(vector<int> bits, NumberSystem* sys);
-    vector<int> ExpandBitSequence(vector<int> bits, NumberSystem* sys);
+    //Standard
+    static vector<int> CompressBitSequence(vector<int> *bits, NumberSystem* sys);
+    static vector<int> ExpandBitSequence(vector<int> *bits, NumberSystem* sys);
+
+    //Used for Testing (Multiple runs with the same number systems.
+    static map<int, vector<int> > getEncodingMapCompression(NumberSystem* sys);
+    static map<vector<int>,int > getEncodingMapExpansion(NumberSystem* sys);
+
+    /* expanding/compressing bits */
+    static vector<int> GetCompressedBits(vector<int> *bits, NumberSystem *sys,const map<int,vector<int> > *encodings);
+    static vector<int> GetExpandedBits(vector<int> *bits, NumberSystem *sys, const map<vector<int>,int> *encodings);
+
 };
 
 #endif // COMPRESSOR_H

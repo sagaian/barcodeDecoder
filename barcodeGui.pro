@@ -23,7 +23,10 @@ SOURCES += main.cpp\
     chunker.cpp \
     encoder.cpp \
     securer.cpp \
-    compressor.cpp
+    compressor.cpp \
+    alphaConverter.cpp \
+    analyzer.cpp \
+    code39_Encoder.cpp
 
 HEADERS  += mainwindow.h \
     fibonacciSystem.h \
@@ -37,7 +40,10 @@ HEADERS  += mainwindow.h \
     chunker.h \
     encoder.h \
     securer.h \
-    compressor.h
+    compressor.h \
+    alphaConverter.h \
+    analyzer.h \
+    code39_Encoder.h
 
 FORMS    += mainwindow.ui \
     numbersystemwidget.ui

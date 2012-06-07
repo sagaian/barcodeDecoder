@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Sat May 26 03:50:21 2012
+** Created: Wed Jun 6 22:42:07 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -38,6 +38,7 @@ static const uint qt_meta_data_MainWindow[] = {
      124,   11,   11,   11, 0x08,
      151,   11,   11,   11, 0x08,
      179,   11,   11,   11, 0x08,
+     220,  214,   11,   11, 0x08,
 
        0        // eod
 };
@@ -50,6 +51,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_addSysButton_released()\0"
     "on_enhanceButton_released()\0"
     "on_decodeEnhancedButton_released()\0"
+    "index\0on_Analytics_2_currentChanged(int)\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -88,9 +90,10 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 4: on_addSysButton_released(); break;
         case 5: on_enhanceButton_released(); break;
         case 6: on_decodeEnhancedButton_released(); break;
+        case 7: on_Analytics_2_currentChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }

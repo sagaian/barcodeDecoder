@@ -3,6 +3,7 @@
 #include "numberSystem.h"
 #include "fibonacciSystem.h"
 #include "goldenRatioSystem.h"
+#include "securer.h"
 #include <iostream>
 numberSystemWidget::numberSystemWidget(QWidget *parent) :
     QWidget(parent),
@@ -18,11 +19,20 @@ numberSystemWidget::~numberSystemWidget()
     delete ui;
 }
 
+bool numberSystemWidget::isValidSystem(){
+    int pValue = ui->pValue->text().toInt();
+    int qValue = ui->qValue->text().toInt();
+    if(pValue == 0 && ui->pValue->text().toStdString().compare("0") != 0) return false; //conversion to int failed
+    if(qValue == 0 && ui->qValue->text().toStdString().compare("0") != 0) return false; //conversion to int failed
+    if(pValue < 0 || qValue < 0 || pValue > MAX_P || qValue > MAX_Q) return false; //if values are negative, system is invalid
+    return true;
+}
+
 NumberSystem numberSystemWidget::getNumberSystem(int maxValue){
     int type = ui->typeBox->currentIndex();
     int op = ui->operatorBox->currentIndex();
     switch(type){
-    case 1:{
+    case 2:{
         float ratio = ui->pValue->text().isEmpty() ? 1.618 : ui->pValue->text().toFloat();
         return GoldenRatio(maxValue, ratio);
     }
@@ -43,7 +53,7 @@ void numberSystemWidget::on_typeBox_currentIndexChanged(int index)
     //set labels to
     switch(index){
     //Golden Ratio
-    case 1:
+    case 2:
         ui->pLabel->setText(QString::fromStdString("Ratio"));
         ui->pValue->setText(QString::fromStdString("1.618"));
         ui->operatorBox->setHidden(true);

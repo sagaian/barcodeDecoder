@@ -3,6 +3,7 @@
 #include "fibonacciSystem.h"
 #include "numberSystem.h"
 #include "multiBase.h"
+#include "goldenRatioSystem.h"
 #include <vector>
 #include <iostream>
 #include <stdlib.h>
@@ -31,25 +32,30 @@ void TestSequences(){
     PrintVector(b.getSequence());
     vector<int> greedy;
     b.getGreedyRepresentation(999, &greedy);
-    cout<< b.getGreedyAsSum(&greedy);
+    string s = b.getGreedyAsSum(&greedy);
+    cout<< s;
 }
 
 int main(int argc, char *argv[])
 {
     //TestSequences();
-  QApplication a(argc, argv);
+    QApplication a(argc, argv);
     MainWindow w;
     w.show();
     return a.exec();
 
 
-}
-
     //possible todo
-    /*Fibonacci f(1, 10, 0);
+   /* Fibonacci f(1, 10, 0);
     NumberSystem k;
-    delete k.getSequence();
     k = f;
-    delete f.getSequence();
-    return 0;*/
+    GoldenRatio g(100, 1.618);
+    k = g;
+    vector<NumberSystem> gf;
+    gf.push_back(g);
+    gf.push_back(f);
+    MultiBase gff(0, &gf);*/
+    return 0;
+
+}
 

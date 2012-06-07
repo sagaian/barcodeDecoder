@@ -15,6 +15,7 @@ class numberSystemWidget : public QWidget
 public:
     NumberSystem getNumberSystem(int maxValue);
     explicit numberSystemWidget(QWidget *parent = 0);
+    bool isValidSystem();
     ~numberSystemWidget();
 
 private slots:

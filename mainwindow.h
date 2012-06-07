@@ -28,18 +28,19 @@ private slots:
     void on_addSysButton_released();
     void on_enhanceButton_released();
     void on_decodeEnhancedButton_released();
-
+    void on_Analytics_2_currentChanged(int index);
 private:
     QVBoxLayout* layout;
     Ui::MainWindow *ui;
     void getDefaultSystem(NumberSystem *sys, int upperLimit);
     void getNumberSystem(NumberSystem *sys, int upperLimit, bool isEncoder);
     // void convertInput(GreedyAlgorithm* g);
-    void generateBinary(float value, NumberSystem *sys, vector<int>*binary);
     void generateBarcode(vector<int> *binary);
+    bool isValidPin(string pin);
     string decode(string path);
     bool enhance(string path);
     string Decode2();
+    void resetEncoderSettings();
 };
 
 #endif // MAINWINDOW_H

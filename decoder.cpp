@@ -2,6 +2,7 @@
 #include <Magick++.h>
 #include <string>
 #include "histogramResult.h"
+#include "alphaConverter.h"
 #include <vector>
 #include "numberSystem.h"
 #include "fibonacciSystem.h"
@@ -19,32 +20,41 @@ histogramResult Decoder::VerticalHistogram(Image* image, size_t startingY){
     image->modifyImage();
     // Set the image type to TrueColor DirectClass representation.
     image->type(TrueColorType);
-    // Request pixel region with size nrows x ncolumns, and top origin at 0x0
-    //size_t nrows = image->rows();
-    size_t nrows = moduleHeight;
-    size_t ncolumns = image->columns();
 
     //create histogram
     histogramResult hist;
-    hist.histogram = new double[ncolumns];
-    hist.length = ncolumns;
+
+    // Request pixel region with size nrows x ncolumns, and top origin at 0x0
+    size_t nrows = moduleHeight;
+    size_t ncolumns = image->columns();
+    PixelPacket *pixel_cache = image->getPixels(0,startingY,ncolumns,nrows);
+    if(pixel_cache == NULL){
+        // problem decoding (i.e. decoding 1D barcode when it is actually 2D)
+        hist.length = 0;
+        return hist;
+    }
+
+    //initialize hist starting values
     hist.max = 0;
     hist.min = Color("white").blueQuantum() + Color("white").redQuantum() + Color("white").greenQuantum();
+    hist.length = ncolumns;
+    hist.histogram = new double[ncolumns];
 
-    PixelPacket *pixel_cache = image->getPixels(0,startingY,ncolumns,nrows);
-    // Set each pixel in the cache to a fixed color.
-    for(size_t col = 0; col < ncolumns; col++){
-        double avgPixelValue = 0;
-        for(size_t row = 0; row < nrows ; row++){
-            PixelPacket *pixel = pixel_cache+row*ncolumns + col;
-            avgPixelValue += (pixel->red + pixel->green + pixel->blue);
-        }
-        avgPixelValue /= (nrows*3);
-        hist.histogram[col] = avgPixelValue;
-        if(avgPixelValue > hist.max){
-            hist.max = avgPixelValue;
-        } else if (avgPixelValue < hist.min){
-            hist.min = avgPixelValue;
+    if(pixel_cache != NULL){
+        // Set each pixel in the cache to a fixed color.
+        for(size_t col = 0; col < ncolumns; col++){
+            double avgPixelValue = 0;
+            for(size_t row = 0; row < nrows ; row++){
+                PixelPacket *pixel = pixel_cache+row*ncolumns + col;
+                avgPixelValue += (pixel->red + pixel->green + pixel->blue);
+            }
+            avgPixelValue /= (nrows*3);
+            hist.histogram[col] = avgPixelValue;
+            if(avgPixelValue > hist.max){
+                hist.max = avgPixelValue;
+            } else if (avgPixelValue < hist.min){
+                hist.min = avgPixelValue;
+            }
         }
     }
     return hist;
@@ -56,6 +66,7 @@ string Decoder::ReadCode39(Image* image){
     // then get the vertical histogram to decode each
     moduleHeight = ONE_D_HEIGHT;
     histogramResult vertHist = VerticalHistogram(image, 0);
+    if(vertHist.length == 0) return ERROR_STRING2;
 
 
     // Set the threshold for determining dark/light bars to half way between the histograms min/max
@@ -151,7 +162,7 @@ string Decoder::ReadCode39(Image* image){
         string pattern = patternString.substr(i, 9);
         dataString += parsePattern(pattern);
     }
-
+    delete[] vertHist.histogram;
     return dataString;
 }
 
@@ -173,14 +184,10 @@ string Decoder::parsePattern(string pattern){
 }
 
 // =================== Fibonacci ============================
-vector<int> Decoder::ImageToBits(Image* image, size_t startingY){
-    // To find a horizontal barcode, find the vertical histogram to find individual barcodes,
-    // then get the vertical histogram to decode each
-    histogramResult vertHist = VerticalHistogram(image, startingY);
-
-
+/** Converts pixel pattern to bit pattern for a given row in image */
+vector<int> Decoder::ImageToBits(histogramResult *vertHist){
     // Set the threshold for determining dark/light bars to half way between the histograms min/max
-    double threshold = vertHist.min + ((vertHist.max - vertHist.min)/2);
+    double threshold = vertHist->min + ((vertHist->max - vertHist->min)/2);
 
     // Variables needed to check for
     vector<int> pattern;
@@ -190,7 +197,7 @@ vector<int> Decoder::ImageToBits(Image* image, size_t startingY){
     bool bDarkBar = false;
 
     // Find the narrow and wide bars
-    for (size_t i = 0; i < vertHist.length; ++i)
+    for (size_t i = 0; i < vertHist->length; ++i)
     {
         // First find the narrow bar width
         if (nNarrowBarWidth < 0)
@@ -198,7 +205,7 @@ vector<int> Decoder::ImageToBits(Image* image, size_t startingY){
             if (nBarStart < 0)
             {
                 // The code doesn't start until we see a dark bar
-                if (vertHist.histogram[i] <= threshold)
+                if (vertHist->histogram[i] <= threshold)
                 {
                     // We detected a dark bar, save it's start position
                     nBarStart = i;
@@ -206,7 +213,7 @@ vector<int> Decoder::ImageToBits(Image* image, size_t startingY){
             }
             else
             {
-                if (vertHist.histogram[i] > threshold)
+                if (vertHist->histogram[i] > threshold)
                 {
                     // We detected the end of first the dark bar, save the narrow bar width and
                     // start the rest of the barcode
@@ -223,7 +230,7 @@ vector<int> Decoder::ImageToBits(Image* image, size_t startingY){
             if (bDarkBar)
             {
                 // We're on a dark bar, detect when the bar becomes light again
-                if (vertHist.histogram[i] > threshold)
+                if (vertHist->histogram[i] > threshold)
                 {
                     int nPixels = i - nBarStart;
                     while(nPixels >= nNarrowBarWidth)
@@ -242,7 +249,7 @@ vector<int> Decoder::ImageToBits(Image* image, size_t startingY){
             else
             {
                 // We're on a light bar, detect when the bar becomes dark
-                if (vertHist.histogram[i] <= threshold)
+                if (vertHist->histogram[i] <= threshold)
                 {
                     int nPixels = i - nBarStart;
                     while(nPixels >= nNarrowBarWidth)
@@ -260,13 +267,12 @@ vector<int> Decoder::ImageToBits(Image* image, size_t startingY){
             }
         }
     }
-    delete[] vertHist.histogram;
     return pattern;
 }
 
 void Decoder::PatternToBinary(vector<int> *pattern, vector<int> *binary){
-     int end = (int) pattern->size() - 1; // pattern includes ending white but not the ending black bar
-     for(int i = 2; i < end; i++) binary->push_back(pattern->at(i)); //ignore starting black and white bars
+    int end = (int) pattern->size() - 1; // pattern includes ending white but not the ending black bar
+    for(int i = 2; i < end; i++) binary->push_back(pattern->at(i)); //ignore starting black and white bars
 }
 
 string Decoder::VectorToString(vector<float> *data){
@@ -291,14 +297,16 @@ string Decoder::ReadFusion(Image* image, NumberSystem *sys, BarcodeType type){
     SetDimensions(image, type); //set reading dimensions
     vector<int> binary; //binary from all rows
     for(size_t i = 0; i < nrows; i++){
-        vector<int> pattern = ImageToBits(image, i*TWO_D_HEIGHT);
+        // To find a horizontal barcode, find the vertical histogram to find individual barcodes,
+        // then get the vertical histogram to decode each
+        histogramResult vertHist = VerticalHistogram(image, i*TWO_D_HEIGHT);
+        if(vertHist.length == 0) return ERROR_STRING2;
+        vector<int> pattern = ImageToBits(&vertHist);
+        delete[] vertHist.histogram;
         PatternToBinary(&pattern, &binary);
     }
-    Compressor compressor;
-    vector<int> uncompressedBinary = compressor.ExpandBitSequence(binary, sys);
+    vector<int> uncompressedBinary = Compressor::ExpandBitSequence(&binary, sys);
     Chunker chunker;
     return chunker.GetNumberRepresentation(uncompressedBinary, sys);
 }
 
-/** Converts pixel pattern to bit pattern for a given row in image */
-vector<int> ImageToBits(Image* image, size_t startingY);

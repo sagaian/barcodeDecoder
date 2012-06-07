@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'numbersystemwidget.ui'
 **
-** Created: Mon May 21 23:39:37 2012
+** Created: Wed Jun 6 18:09:25 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -104,7 +104,7 @@ public:
         typeBox->clear();
         typeBox->insertItems(0, QStringList()
          << QApplication::translate("numberSystemWidget", "Fibonacci", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("numberSystemWidget", "Golden Ratio", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("numberSystemWidget", "Lucas", 0, QApplication::UnicodeUTF8)
         );
         operatorBox->clear();
         operatorBox->insertItems(0, QStringList()
