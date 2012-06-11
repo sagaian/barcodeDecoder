@@ -26,7 +26,10 @@ SOURCES += main.cpp\
     compressor.cpp \
     alphaConverter.cpp \
     analyzer.cpp \
-    code39_Encoder.cpp
+    pqFibonacciSystem.cpp \
+    lucasSystem.cpp \
+    code39.cpp \
+    powerSystem.cpp
 
 HEADERS  += mainwindow.h \
     fibonacciSystem.h \
@@ -43,7 +46,10 @@ HEADERS  += mainwindow.h \
     compressor.h \
     alphaConverter.h \
     analyzer.h \
-    code39_Encoder.h
+    pqFibonacciSystem.h \
+    lucasSystem.h \
+    code39.h \
+    powerSystem.h
 
 FORMS    += mainwindow.ui \
     numbersystemwidget.ui

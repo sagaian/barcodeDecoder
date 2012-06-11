@@ -212,3 +212,23 @@ string AlphaConverter::floatToString(float num){
     str << num;
     return str.str();
 }
+
+int AlphaConverter::roundFloat(float num){
+    int result = num;
+    float remainder = num-(float)result;
+    if(remainder < .5){
+        return result;
+    }
+    return (result+1);
+}
+
+string AlphaConverter::sequenceToString(vector<float>* sequence){
+    string result;
+    for(unsigned int i =0; i < sequence->size(); i++){
+        result.append(floatToString(sequence->at(i)));
+        result += " ";
+    }
+    return result;
+}
+
+

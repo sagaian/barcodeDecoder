@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'numbersystemwidget.h'
 **
-** Created: Wed Jun 6 18:14:03 2012
+** Created: Sun Jun 10 23:52:33 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_numberSystemWidget[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,7 +33,6 @@ static const uint qt_meta_data_numberSystemWidget[] = {
  // slots: signature, parameters, type, tag, flags
       20,   19,   19,   19, 0x08,
       53,   47,   19,   19, 0x08,
-      94,   89,   19,   19, 0x08,
 
        0        // eod
 };
@@ -76,7 +75,7 @@ int numberSystemWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 1: on_typeBox_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 3;
+        _id -= 2;
     }
     return _id;
 }

@@ -38,7 +38,7 @@ float Enhancer::PlipMulp(float pixel1, float pixel2){
 
 
 // split pixel value into lower and upper half (as determined by threshold), returns lower
-float Enhancer::SplitPixel(float pixel, NumberSystem *s, size_t nTerms, size_t threshold){
+float Enhancer::SplitPixel(float pixel, NumberSystem *s, size_t threshold){
     vector<float> *seq = s->getSequence();
     vector<int> greedy;
     s->getGreedyRepresentation(pixel, &greedy);
@@ -69,7 +69,7 @@ void Enhancer::EnhanceImage(Image image, NumberSystem *sys){
         for(size_t col = 0; col < ncolumns; col++){
             PixelPacket *pixel = pixel_cache + row*ncolumns + col;
             float pixel256 = pixel->blue/256.0;
-            float lower = SplitPixel(pixel256, sys, nterms, midpt);
+            float lower = SplitPixel(pixel256, sys, midpt);
             float upper = pixel256 - lower;
             float product = PlipGt(PlipMulp(PlipGt(upper), PlipGt(lower)));
             if(row == 0 && col == 0){

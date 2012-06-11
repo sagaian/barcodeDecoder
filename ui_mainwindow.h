@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Jun 6 22:49:49 2012
+** Created: Sun Jun 10 23:52:25 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -104,10 +104,6 @@ public:
     QLabel *label_11;
     QLabel *systemErrorLabel;
     QWidget *Analytics;
-    QWidget *layoutWidget_4;
-    QHBoxLayout *horizontalLayout_11;
-    QLineEdit *directory_fusion;
-    QPushButton *brows_fusion;
     QLabel *barcode_code39;
     QLabel *label_15;
     QLabel *barcode_fusion;
@@ -115,9 +111,11 @@ public:
     QLabel *label_code39_length;
     QLabel *label_fusion_length;
     QWidget *layoutWidget;
-    QHBoxLayout *label_code39;
-    QLineEdit *directory_code39;
-    QPushButton *browse_code39;
+    QHBoxLayout *horizontalLayout_4;
+    QLineEdit *Analytics_Input;
+    QComboBox *Analytics_modeSelection;
+    QPushButton *Analytics_EncodeButton;
+    QLabel *Analytics_encodeErrorLabel;
     QMenuBar *menuBar;
     QMenu *menuFusion_Codes;
     QToolBar *mainToolBar;
@@ -251,6 +249,7 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(inputTextBox->sizePolicy().hasHeightForWidth());
         inputTextBox->setSizePolicy(sizePolicy);
+        inputTextBox->setFrame(true);
         encodeErrorLabel = new QLabel(Encoder);
         encodeErrorLabel->setObjectName(QString::fromUtf8("encodeErrorLabel"));
         encodeErrorLabel->setEnabled(true);
@@ -262,8 +261,9 @@ public:
         picLabel = new QLabel(Decoder);
         picLabel->setObjectName(QString::fromUtf8("picLabel"));
         picLabel->setGeometry(QRect(20, 130, 261, 221));
-        picLabel->setFrameShape(QFrame::NoFrame);
+        picLabel->setFrameShape(QFrame::WinPanel);
         picLabel->setFrameShadow(QFrame::Sunken);
+        picLabel->setScaledContents(false);
         decodeButton = new QPushButton(Decoder);
         decodeButton->setObjectName(QString::fromUtf8("decodeButton"));
         decodeButton->setGeometry(QRect(60, 510, 131, 27));
@@ -276,6 +276,7 @@ public:
         enhanceLabel = new QLabel(Decoder);
         enhanceLabel->setObjectName(QString::fromUtf8("enhanceLabel"));
         enhanceLabel->setGeometry(QRect(340, 130, 261, 221));
+        enhanceLabel->setScaledContents(false);
         horizontalLayoutWidget_4 = new QWidget(Decoder);
         horizontalLayoutWidget_4->setObjectName(QString::fromUtf8("horizontalLayoutWidget_4"));
         horizontalLayoutWidget_4->setGeometry(QRect(10, 20, 631, 31));
@@ -428,71 +429,62 @@ public:
         Analytics_2->addTab(Advanced_Options, QString());
         Analytics = new QWidget();
         Analytics->setObjectName(QString::fromUtf8("Analytics"));
-        layoutWidget_4 = new QWidget(Analytics);
-        layoutWidget_4->setObjectName(QString::fromUtf8("layoutWidget_4"));
-        layoutWidget_4->setGeometry(QRect(370, 90, 261, 29));
-        horizontalLayout_11 = new QHBoxLayout(layoutWidget_4);
-        horizontalLayout_11->setSpacing(6);
-        horizontalLayout_11->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_11->setObjectName(QString::fromUtf8("horizontalLayout_11"));
-        horizontalLayout_11->setContentsMargins(0, 0, 0, 0);
-        directory_fusion = new QLineEdit(layoutWidget_4);
-        directory_fusion->setObjectName(QString::fromUtf8("directory_fusion"));
-
-        horizontalLayout_11->addWidget(directory_fusion);
-
-        brows_fusion = new QPushButton(layoutWidget_4);
-        brows_fusion->setObjectName(QString::fromUtf8("brows_fusion"));
-
-        horizontalLayout_11->addWidget(brows_fusion);
-
         barcode_code39 = new QLabel(Analytics);
         barcode_code39->setObjectName(QString::fromUtf8("barcode_code39"));
-        barcode_code39->setGeometry(QRect(20, 140, 261, 211));
+        barcode_code39->setGeometry(QRect(15, 130, 271, 211));
         barcode_code39->setFrameShape(QFrame::WinPanel);
         barcode_code39->setFrameShadow(QFrame::Sunken);
         barcode_code39->setScaledContents(true);
         label_15 = new QLabel(Analytics);
         label_15->setObjectName(QString::fromUtf8("label_15"));
-        label_15->setGeometry(QRect(20, 60, 91, 31));
+        label_15->setGeometry(QRect(15, 100, 91, 31));
         QFont font1;
         font1.setPointSize(16);
         label_15->setFont(font1);
         barcode_fusion = new QLabel(Analytics);
         barcode_fusion->setObjectName(QString::fromUtf8("barcode_fusion"));
-        barcode_fusion->setGeometry(QRect(370, 140, 261, 211));
+        barcode_fusion->setGeometry(QRect(365, 130, 271, 211));
         barcode_fusion->setFrameShape(QFrame::WinPanel);
         barcode_fusion->setFrameShadow(QFrame::Sunken);
         barcode_fusion->setScaledContents(true);
         label_fusion = new QLabel(Analytics);
         label_fusion->setObjectName(QString::fromUtf8("label_fusion"));
-        label_fusion->setGeometry(QRect(370, 60, 151, 31));
+        label_fusion->setGeometry(QRect(365, 100, 151, 31));
         label_fusion->setFont(font1);
         label_code39_length = new QLabel(Analytics);
         label_code39_length->setObjectName(QString::fromUtf8("label_code39_length"));
-        label_code39_length->setGeometry(QRect(20, 390, 71, 31));
+        label_code39_length->setGeometry(QRect(15, 380, 261, 31));
         label_fusion_length = new QLabel(Analytics);
         label_fusion_length->setObjectName(QString::fromUtf8("label_fusion_length"));
-        label_fusion_length->setGeometry(QRect(370, 390, 71, 31));
+        label_fusion_length->setGeometry(QRect(365, 380, 261, 31));
         layoutWidget = new QWidget(Analytics);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(20, 90, 261, 29));
-        label_code39 = new QHBoxLayout(layoutWidget);
-        label_code39->setSpacing(6);
-        label_code39->setContentsMargins(11, 11, 11, 11);
-        label_code39->setObjectName(QString::fromUtf8("label_code39"));
-        label_code39->setContentsMargins(0, 0, 0, 0);
-        directory_code39 = new QLineEdit(layoutWidget);
-        directory_code39->setObjectName(QString::fromUtf8("directory_code39"));
-        directory_code39->setEnabled(true);
+        layoutWidget->setGeometry(QRect(15, 40, 611, 29));
+        horizontalLayout_4 = new QHBoxLayout(layoutWidget);
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
+        Analytics_Input = new QLineEdit(layoutWidget);
+        Analytics_Input->setObjectName(QString::fromUtf8("Analytics_Input"));
 
-        label_code39->addWidget(directory_code39);
+        horizontalLayout_4->addWidget(Analytics_Input);
 
-        browse_code39 = new QPushButton(layoutWidget);
-        browse_code39->setObjectName(QString::fromUtf8("browse_code39"));
+        Analytics_modeSelection = new QComboBox(layoutWidget);
+        Analytics_modeSelection->setObjectName(QString::fromUtf8("Analytics_modeSelection"));
 
-        label_code39->addWidget(browse_code39);
+        horizontalLayout_4->addWidget(Analytics_modeSelection);
 
+        Analytics_EncodeButton = new QPushButton(layoutWidget);
+        Analytics_EncodeButton->setObjectName(QString::fromUtf8("Analytics_EncodeButton"));
+
+        horizontalLayout_4->addWidget(Analytics_EncodeButton);
+
+        Analytics_encodeErrorLabel = new QLabel(Analytics);
+        Analytics_encodeErrorLabel->setObjectName(QString::fromUtf8("Analytics_encodeErrorLabel"));
+        Analytics_encodeErrorLabel->setEnabled(true);
+        Analytics_encodeErrorLabel->setGeometry(QRect(260, 560, 131, 17));
+        Analytics_encodeErrorLabel->setStyleSheet(QString::fromUtf8("color: rgb(255, 0, 0);"));
         Analytics_2->addTab(Analytics, QString());
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -512,7 +504,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        Analytics_2->setCurrentIndex(0);
+        Analytics_2->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -551,7 +543,7 @@ public:
         enhanceButton->setText(QApplication::translate("MainWindow", "Enhance", 0, QApplication::UnicodeUTF8));
         enhanceLabel->setText(QString());
         label->setText(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
-        lineEdit->setText(QApplication::translate("MainWindow", "/home/sagaian/Desktop/cs194/barcodeDecoder2/encoded.gif", 0, QApplication::UnicodeUTF8));
+        lineEdit->setText(QApplication::translate("MainWindow", "/home/jose/Desktop/Final Barcode cs194/barcodeDecoder2/encoded.gif", 0, QApplication::UnicodeUTF8));
         browseButton->setText(QApplication::translate("MainWindow", "Browse", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("MainWindow", " Type", 0, QApplication::UnicodeUTF8));
         systemBox->clear();
@@ -585,14 +577,20 @@ public:
         label_11->setText(QApplication::translate("MainWindow", "Set Encoder Directory", 0, QApplication::UnicodeUTF8));
         systemErrorLabel->setText(QApplication::translate("MainWindow", "INVALID SYSTEM", 0, QApplication::UnicodeUTF8));
         Analytics_2->setTabText(Analytics_2->indexOf(Advanced_Options), QApplication::translate("MainWindow", "Advanced Options", 0, QApplication::UnicodeUTF8));
-        brows_fusion->setText(QApplication::translate("MainWindow", "Browse", 0, QApplication::UnicodeUTF8));
         barcode_code39->setText(QString());
         label_15->setText(QApplication::translate("MainWindow", "Code 39", 0, QApplication::UnicodeUTF8));
         barcode_fusion->setText(QString());
         label_fusion->setText(QApplication::translate("MainWindow", "Fusion Code", 0, QApplication::UnicodeUTF8));
         label_code39_length->setText(QApplication::translate("MainWindow", "Length:", 0, QApplication::UnicodeUTF8));
         label_fusion_length->setText(QApplication::translate("MainWindow", "Length:", 0, QApplication::UnicodeUTF8));
-        browse_code39->setText(QApplication::translate("MainWindow", "Browse", 0, QApplication::UnicodeUTF8));
+        Analytics_modeSelection->clear();
+        Analytics_modeSelection->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "Numeric", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "Alpha", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "AlphaNumeric", 0, QApplication::UnicodeUTF8)
+        );
+        Analytics_EncodeButton->setText(QApplication::translate("MainWindow", "Encode", 0, QApplication::UnicodeUTF8));
+        Analytics_encodeErrorLabel->setText(QApplication::translate("MainWindow", "CANNOT ENCODE", 0, QApplication::UnicodeUTF8));
         Analytics_2->setTabText(Analytics_2->indexOf(Analytics), QApplication::translate("MainWindow", "Analytics", 0, QApplication::UnicodeUTF8));
         menuFusion_Codes->setTitle(QApplication::translate("MainWindow", "Fusion Codes", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

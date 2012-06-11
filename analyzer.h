@@ -1,4 +1,4 @@
-/*#ifndef ANALYZER_H
+#ifndef ANALYZER_H
 #define ANALYZER_H
 
 #include <string>
@@ -10,7 +10,7 @@
 #include "multiBase.h"
 #include "fibonacciSystem.h"
 
-#define DIGITS 2
+#define DIGITS 4
 #define P_MIN1 1
 #define P_MAX1 10
 #define P_MIN2 1
@@ -30,4 +30,4 @@ public:
     static string getTestResuls();
 };
 #endif // ANALYZER_H
-*/
+

@@ -23,7 +23,7 @@ public:
     };
 
     /** Encodes binary string to a certain path based on barcode type */
-    void EncodeBinary(vector<int> *binary, string path, BarcodeType type);
+    void EncodeBinary(vector<int> *binary, string path, BarcodeType type, bool fusion);
     /** Converts vector to string - todo: move :) */
     string VectorToString(vector<int> *data);
 
@@ -60,6 +60,9 @@ private:
     /** Encodes multiples rows by "stacking" single rows on top of each other.
       * Used for two dimensional encoding.
       */
+
+    void encodeRowCode39(PixelPacket *cache, vector<int> *rowBinary);
+
     void encodeMultipleRows(PixelPacket *cache, vector<int> *binary);
 };
 

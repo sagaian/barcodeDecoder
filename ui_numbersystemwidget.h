@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'numbersystemwidget.ui'
 **
-** Created: Wed Jun 6 18:09:25 2012
+** Created: Sun Jun 10 23:52:25 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -105,6 +105,7 @@ public:
         typeBox->insertItems(0, QStringList()
          << QApplication::translate("numberSystemWidget", "Fibonacci", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("numberSystemWidget", "Lucas", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("numberSystemWidget", "DoubleBase", 0, QApplication::UnicodeUTF8)
         );
         operatorBox->clear();
         operatorBox->insertItems(0, QStringList()
@@ -112,7 +113,7 @@ public:
          << QApplication::translate("numberSystemWidget", "*", 0, QApplication::UnicodeUTF8)
         );
         pLabel->setText(QApplication::translate("numberSystemWidget", "p:", 0, QApplication::UnicodeUTF8));
-        qLabel->setText(QApplication::translate("numberSystemWidget", "q", 0, QApplication::UnicodeUTF8));
+        qLabel->setText(QApplication::translate("numberSystemWidget", "q:", 0, QApplication::UnicodeUTF8));
         removeButton->setText(QApplication::translate("numberSystemWidget", "Remove", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

@@ -20,7 +20,7 @@ private:
     float PlipInvPhi(float pixel); // PLIP inverse phi transform
     float PlipMulp(float pixel1, float pixel2); // PLIP multiplication
     // split pixel value into lower and upper half (as determined by threshold), returns lower
-    float SplitPixel(float pixel, NumberSystem *s, size_t nTerms, size_t threshold);
+    float SplitPixel(float pixel, NumberSystem *s, size_t threshold);
 public:
     void EnhanceImage(Image image, NumberSystem *sys);
 };

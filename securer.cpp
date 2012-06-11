@@ -12,13 +12,15 @@
 #include <iomanip>
 #include <chunker.h>
 #include <math.h>
+#include "pqFibonacciSystem.h"
+#include "lucasSystem.h"
 
 using namespace std;
 
 /* private methods */
-string Securer::encodeFibonacciPin(int p, int q, int op){
+string Securer::encodePQPin(int p, int q){
     stringstream ss;
-    ss << p << q << op;
+    ss << p << q;
     return ss.str();
 }
 
@@ -36,32 +38,47 @@ string Securer::encodeGoldenPin(float ratio){
 
 void Securer::generateRandomFibonacci(NumberSystem *sys){
     int p, q, op;
-    p = rand() % (MAX_P + 1);
-    q = rand() % (MAX_Q + 1);
+    p = rand() % (MAX_P + 1 - MIN_P);
+    q = rand() % (MAX_Q + 1 - MIN_Q);
+    p += MIN_P;
+    q += MIN_Q;
     //op = rand() % 2;
     op = 0;
-    Fibonacci f(p, Chunker::maxSeqValue, op);
+    pqFibonacci f(p,q,Chunker::maxSeqValue, op);
     *sys = f;
-    securePin += '0' + encodeFibonacciPin(p, q, op);
+    securePin += '0' + encodePQPin(p, q);
+}
+
+void Securer::generateRandomLucas(NumberSystem* sys){
+    int p, q, op;
+    p = rand() % (MAX_P + 1 - MIN_P);
+    q = rand() % (MAX_Q + 1 - MIN_Q);
+    p += MIN_P;
+    q += MIN_Q;
+    //op = rand() % 2;
+    op = 0;
+    Lucas l(p,q,Chunker::maxSeqValue, op);
+    *sys = l;
+    securePin += '1' + encodePQPin(p, q);
 }
 
 void Securer::generateRandomRatio(NumberSystem *sys){
     float ratio = (rand() % Chunker::maxSeqValue + 1.0)/(Chunker::maxSeqValue + 1) + 1; //ie Chunker::maxSeqValue = 999, float values range from 1.001 - 1.999
     GoldenRatio g(Chunker::maxSeqValue, ratio);
     *sys = g;
-    securePin += '1' + encodeGoldenPin(ratio);
+    securePin += '3' + encodeGoldenPin(ratio);
 }
 
 void Securer::generateRandomMultiBase(NumberSystem *sys, int nSystems){
     vector<NumberSystem> systems;
     for(int i = 0; i < nSystems; i++){
         NumberSystem nextSys;
-        //int type = rand() % 2;
-        int type =0;
+        int type = rand() % NUM_SYSTEMS;
         if(type == 0){
             generateRandomFibonacci(&nextSys);
         } else {
-            generateRandomRatio(&nextSys);
+            generateRandomLucas(&nextSys);
+            //generateRandomRatio(&nextSys);
         }
         systems.push_back(nextSys);
     }
@@ -75,12 +92,21 @@ void Securer::ratioPinToSystem(string pin, NumberSystem *sys){
     *sys = g;
 }
 
-void Securer::fibonacciPinToSystem(string pin, NumberSystem *sys){
-    int p = pin.at(0) - '0';
-    int q = pin.at(1) - '0';
-    int op = pin.at(2) - '0';
-    Fibonacci f(p, Chunker::maxSeqValue, op);
-    *sys = f;
+void Securer::PinToSystem(string pin, NumberSystem *sys){
+    int p = pin.at(1) - '0';
+    int q = pin.at(2) - '0';
+    int op = 0;
+    switch(pin.at(0)){
+    case '0':
+        *sys = pqFibonacci(p,q, Chunker::maxSeqValue, op);
+        break;
+    case '1':
+        *sys = Lucas(p,q, Chunker::maxSeqValue, op);
+        break;
+    default:
+        *sys = pqFibonacci(p,q, Chunker::maxSeqValue, op);
+        //ratioPinToSystem(pin.substr(i+1,PIN_CHUNK-1), &nextSys);
+    }
 }
 
 /* public methods */
@@ -96,19 +122,20 @@ string Securer::getPin(){
 
 void Securer::generateUnsecuredSystem(NumberSystem *sys){
     vector<NumberSystem> unsecuredSequences;//note these cannot be randomly generated as secure sequence
-    unsecuredSequences.push_back(Fibonacci(0, Chunker::maxSeqValue, 0));
-    unsecuredSequences.push_back(Fibonacci(1, Chunker::maxSeqValue, 0));
-    unsecuredSequences.push_back(Fibonacci(1, Chunker::maxSeqValue, 0));
+    unsecuredSequences.push_back(pqFibonacci(0, 0,Chunker::maxSeqValue, 0));
+    unsecuredSequences.push_back(pqFibonacci(1, 0,Chunker::maxSeqValue, 0));
+    unsecuredSequences.push_back(pqFibonacci(1, 0,Chunker::maxSeqValue, 0));
     *sys = MultiBase(0, &unsecuredSequences);
+    sys->sanitizeSequence();
 }
 
 void Securer::generateLowSecuritySystem(NumberSystem *sys){
-    generateRandomMultiBase(sys, MAX_SYSTEMS - 1);
+    generateRandomMultiBase(sys, MAX_SYSTEMS_SECURE - 1);
     sys->sanitizeSequence();
 }
 
 void Securer::generateHighSecuritySystem(NumberSystem *sys){
-    generateRandomMultiBase(sys, MAX_SYSTEMS);
+    generateRandomMultiBase(sys, MAX_SYSTEMS_SECURE);
     sys->sanitizeSequence();
 }
 
@@ -122,13 +149,7 @@ void Securer::decodePin(string pin, NumberSystem *sys){
     vector<NumberSystem> systems;
     for(size_t i = 0; i < len; i+=PIN_CHUNK){
         NumberSystem nextSys;
-        if(pin.at(i) == '0'){
-            fibonacciPinToSystem(pin.substr(i+1,PIN_CHUNK-1), &nextSys);
-        } else {
-            //ratioPinToSystem(pin.substr(i+1,PIN_CHUNK-1), &nextSys);
-            // TODO NEED ANOTHER NUMBER SYSTEM
-            fibonacciPinToSystem(pin.substr(i+1,PIN_CHUNK-1), &nextSys);
-        }
+        PinToSystem(pin.substr(i,PIN_CHUNK), &nextSys);
         systems.push_back(nextSys);
     }
     MultiBase b(0, &systems);

@@ -1,4 +1,4 @@
-/*#include "analyzer.h"
+#include "analyzer.h"
 
 vector<NumberSystem> Analyzer::systems = generateSystemVector();
 
@@ -66,4 +66,4 @@ string Analyzer::getTestResuls(){
     results.append(AlphaConverter::floatToString(bestAvg));
     return results;
 }
-*/
+

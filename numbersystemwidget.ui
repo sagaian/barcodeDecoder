@@ -26,6 +26,11 @@
        <string>Lucas</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>DoubleBase</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item>
@@ -74,7 +79,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>q</string>
+      <string>q:</string>
      </property>
     </widget>
    </item>

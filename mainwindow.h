@@ -8,6 +8,11 @@
 #include <string>
 using namespace std;
 
+#define FUSION_FILE "encoded.gif"
+#define CODE39_FILE_ANALYTICS "code39.gif"
+#define FUSION_FILE_ANALYTICS "fusion.gif"
+#define BROWSE_FOLDER "/home/jose/Desktop/Final Barcode cs194/barcodeDecoder2/"
+
 namespace Ui {
 class MainWindow;
 }
@@ -29,18 +34,22 @@ private slots:
     void on_enhanceButton_released();
     void on_decodeEnhancedButton_released();
     void on_Analytics_2_currentChanged(int index);
+    void on_Analytics_EncodeButton_released();
+
 private:
     QVBoxLayout* layout;
     Ui::MainWindow *ui;
     void getDefaultSystem(NumberSystem *sys, int upperLimit);
     void getNumberSystem(NumberSystem *sys, int upperLimit, bool isEncoder);
     // void convertInput(GreedyAlgorithm* g);
-    void generateBarcode(vector<int> *binary);
+    void generateBarcode(vector<int> *binary, string filename);
     bool isValidPin(string pin);
     string decode(string path);
     bool enhance(string path);
     string Decode2();
     void resetEncoderSettings();
+
+    void generateCode39Barcode(vector<int> *binary, string filename);
 };
 
 #endif // MAINWINDOW_H

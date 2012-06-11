@@ -10,6 +10,7 @@
 #include "encoder.h"
 #include "chunker.h"
 #include "compressor.h"
+#include "code39.h"
 
 using namespace std;
 using namespace Magick;
@@ -66,7 +67,6 @@ string Decoder::ReadCode39(Image* image){
     // then get the vertical histogram to decode each
     moduleHeight = ONE_D_HEIGHT;
     histogramResult vertHist = VerticalHistogram(image, 0);
-    if(vertHist.length == 0) return ERROR_STRING2;
 
 
     // Set the threshold for determining dark/light bars to half way between the histograms min/max
@@ -102,7 +102,7 @@ string Decoder::ReadCode39(Image* image){
                     // We detected the end of first the dark bar, save the narrow bar width and
                     // start the rest of the barcode
                     nNarrowBarWidth = i - nBarStart + 1;
-                    patternString += "n";
+                    patternString += "N";
                     nBarStart = i;
                     bDarkBar = false;
                 }
@@ -118,13 +118,13 @@ string Decoder::ReadCode39(Image* image){
                     if ((i-nBarStart) > (nNarrowBarWidth))
                     {
                         // The light bar was wider than the narrow bar width, it's a wide bar
-                        patternString += "w";
+                        patternString += "W";
                         nBarStart = i;
                     }
                     else
                     {
                         // The light bar is a narrow bar
-                        patternString += "n";
+                        patternString += "N";
                         nBarStart = i;
                     }
                     bDarkBar = false;
@@ -153,34 +153,15 @@ string Decoder::ReadCode39(Image* image){
         }
     }
 
+    patternString += 'N';
+
     // We now have a barcode in terms of narrow & wide bars... Parse it!
     string dataString = "";
 
     // Each pattern within code 39 is nine bars with one white bar between each pattern
-    for(size_t i=0; i<patternString.length()-1; i+=10)
-    {
-        string pattern = patternString.substr(i, 9);
-        dataString += parsePattern(pattern);
-    }
-    delete[] vertHist.histogram;
-    return dataString;
-}
+    dataString = Code39::decodeBarcode(patternString);
 
-// =================== Code 39 ============================
-string Decoder::parsePattern(string pattern){
-    if(!pattern.compare("wnnwnnnnw")){
-        return "1";
-    } else if (!pattern.compare("nnwwnnnnw")){
-        return "2";
-    } else if (!pattern.compare("wnnnnwnnw")){
-        return "A";
-    } else if (!pattern.compare("nnnnwwnnw")){
-        return "D";
-    } else if (!pattern.compare("nnnnwnwwn")){
-        return "T";
-    } else {
-        return "*";
-    }
+    return dataString;
 }
 
 // =================== Fibonacci ============================

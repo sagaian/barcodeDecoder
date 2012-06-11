@@ -24,14 +24,19 @@ private:
     static const map<int,char> alphaNumericDecodeMap;
 
     static string adjustStringSize(string str);
-    static string stringToUpper(string str);
 public:
+    static string stringToUpper(string str);
+
     static string integerToString(int num);
     static int stringToInteger(string str);
 
     static string encodeAlpha(string input, int mode);
     static string decodeAlpha(string input, int mode);
     static string bitSequenceToString(vector< vector<int> > bits);
+
     static string floatToString(float num);
+    static int roundFloat(float num);
+
+    static string sequenceToString(vector<float>* sequence);
 };
 #endif // ALPHACONVERTER_H

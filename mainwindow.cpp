@@ -18,6 +18,10 @@
 #include "compressor.h"
 #include "alphaConverter.h"
 #include "analyzer.h"
+#include "pqFibonacciSystem.h"
+#include "lucasSystem.h"
+#include "powerSystem.h"
+#include "code39.h"
 
 using namespace std;
 using namespace Magick;
@@ -34,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     viewport->setLayout(layout);
     ui->scrollArea->setWidget(viewport);
     ui->encodeErrorLabel->hide();
+    ui->Analytics_encodeErrorLabel->hide();
     ui->systemErrorLabel->hide();
 }
 
@@ -71,7 +76,7 @@ void MainWindow::on_saveBrowseButton_released()
 
 // default system is classical fibonacci
 void MainWindow::getDefaultSystem(NumberSystem *sys, int upperLimit){
-    Fibonacci f(1, upperLimit, 0);
+    pqFibonacci f(1,0, upperLimit, 0);
     f.sanitizeSequence();
     *sys = f;
 }
@@ -82,6 +87,7 @@ bool MainWindow::isValidPin(string pin){
     if(pinLen % PIN_CHUNK != 0) return false;
     for(size_t i = 0; i < pinLen; i++){
         if(!isdigit(pin.at(i))) return false;
+        if(i % PIN_CHUNK == 0 && (pin.at(i)-'0') >= NUM_SYSTEMS) return false;
     }
     return true;
 }
@@ -126,15 +132,15 @@ void MainWindow::getNumberSystem(NumberSystem *sys, int upperLimit, bool isEncod
     sys->sanitizeSequence();
 }
 
-void MainWindow::generateBarcode(vector<int> *binary){
+void MainWindow::generateBarcode(vector<int> *binary, string filename){
     Encoder e;
     //e.EncodeBinary(binary, ui->saveLocationBox->text().toStdString(),e.OneDimensional);
     if(ui->typeSelection->currentIndex() == 0){
-        e.EncodeBinary(binary, "encoded.gif" ,e.OneDimensional);
+        e.EncodeBinary(binary, filename ,e.OneDimensional, true);
     } else {
-        e.EncodeBinary(binary, "encoded.gif" ,e.TwoDimensional);
+        e.EncodeBinary(binary, filename ,e.TwoDimensional, true);
     }
-    QPixmap encodedImage("encoded.gif");
+    QPixmap encodedImage(QString::fromStdString(filename));
     ui->encodedBarcode->setPixmap(encodedImage);
     ui->encodedBinaryBox->setText(QString::fromStdString(e.VectorToString(binary)));
 }
@@ -344,15 +350,27 @@ void MainWindow::on_encodeButton_released()
         getNumberSystem(&sys, c.maxSeqValue, true);
         vector<int> binary = c.GetBitRepresentation(input, &sys);
         vector<int> compressedBinary = Compressor::CompressBitSequence(&binary, &sys);
-        generateBarcode(&compressedBinary);
+        generateBarcode(&compressedBinary, FUSION_FILE);
     }
-    //ui->encodedBinaryBox->setText(QString::fromStdString(sys.getGreedyAsSum(&binary)));
+
+     /*Number systems checking
+    NumberSystem sys;
+        getNumberSystem(&sys, 1000, true);
+        vector<float>* seq = sys.getSequence();
+        string printOut = sys.getDescription();
+        printOut += " ";
+        printOut.append(AlphaConverter::sequenceToString(seq));
+        ui->encodedBinaryBox->setText(QString::fromStdString(printOut));
+
+*/
+
+    //    ui->encodedBinaryBox->setText(QString::fromStdString(sys.getGreedyAsSum(&binary)));
     //ui->encodedBinaryBox->setText(QString::fromStdString(Analyzer::getTestResuls()));
 
 
 
-    // for debugging
-    /*for(int i = 1000000000; i < 2000000000; i+=12345678){
+    /* for debugging
+    for(int i = 1000000000; i < 2000000000; i+=12345678){
    //     for(int i = 1; i < 100; i++){
         cout << i << "\n";
         getNumberSystem(&sys, MAX_CHUNK, true);
@@ -368,5 +386,70 @@ void MainWindow::on_encodeButton_released()
         ui->resultLabel->setText( QString::fromStdString(result));
         //assert(round(atof(result.c_str())) == i);
     }*/
+}
+
+void MainWindow::generateCode39Barcode(vector<int> *binary, string filename){
+    Encoder e;
+    e.EncodeBinary(binary, filename ,e.OneDimensional, false);
+    QPixmap encodedImage(QString::fromStdString(filename));
+    ui->encodedBarcode->setPixmap(encodedImage);
+    ui->encodedBinaryBox->setText(QString::fromStdString(e.VectorToString(binary)));
+}
+
+void MainWindow::on_Analytics_EncodeButton_released(){
+    //ensure that error message is hidden.
+    ui->Analytics_encodeErrorLabel->hide();
+
+    //use input to generate code39 bit sequence
+    string input = ui->Analytics_Input->text().toStdString();
+    vector<int> code39bits = Code39::encodeBarcode(input);
+
+    //convert input for Fusion encoding
+    int mode = ui->Analytics_modeSelection->currentIndex();
+    input = AlphaConverter::encodeAlpha(input,mode);
+
+    //generate fusion bit sequence
+    NumberSystem sys;
+    Chunker c;
+    getNumberSystem(&sys, c.maxSeqValue, true);
+    vector<int> binary = c.GetBitRepresentation(input, &sys);
+    vector<int> compressedBinary = Compressor::CompressBitSequence(&binary, &sys);
+
+    //if bit sequences are empty show an error.
+    /* TODO:
+     * For proper error handling, we would want the encoding process to tell us there is an error
+     * with the fusion encoding by returning an empty bit sequence. This tells us something bad happened.
+     * Then there would be no need to check for the error string here. Instead we would check at the time
+     * of the encoding and ERROR_STRING1 = binary.empty() = compressedBinary.empty().
+     */
+    if(input == ERROR_STRING1 || code39bits.empty() || compressedBinary.empty()){
+        //we have an error.
+        ui->Analytics_encodeErrorLabel->show();
+        return;
+    }
+
+    //generate both the code39 and fusion barcodes.
+    generateBarcode(&compressedBinary, FUSION_FILE_ANALYTICS);
+    generateCode39Barcode(&code39bits, CODE39_FILE_ANALYTICS);
+
+    //tack together the paths where the images are
+    string path_code39 = BROWSE_FOLDER;
+    string path_fusion = BROWSE_FOLDER;
+    path_code39.append(CODE39_FILE_ANALYTICS);
+    path_fusion.append(FUSION_FILE_ANALYTICS);
+
+    //Display both barcodes
+    QPixmap image_code39(QString::fromStdString(path_code39));
+    ui->barcode_code39->setPixmap(image_code39);
+    QPixmap image_fusion(QString::fromStdString(path_fusion));
+    ui->barcode_fusion->setPixmap(image_fusion);
+
+    //state the lengths in bits of each barcode.
+    string length_code39 = "Length: ";
+    string length_fusion = "Length: ";
+    length_code39.append(AlphaConverter::integerToString(code39bits.size()));
+    length_fusion.append(AlphaConverter::integerToString(compressedBinary.size()));
+    ui->label_code39_length->setText(QString::fromStdString(length_code39));
+    ui->label_fusion_length->setText(QString::fromStdString(length_fusion));
 
 }

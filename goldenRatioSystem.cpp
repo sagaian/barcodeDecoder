@@ -20,9 +20,15 @@ void GoldenRatio::generateSequence(int maxValue, float ratio){
     while(true){
         float nextTerm = (float)pow(ratio, i);
         if(nextTerm > maxValue) break;
-        sequence.push_back(nextTerm);
+        sequence.push_back(AlphaConverter::roundFloat(nextTerm));
         i++;
     }
+}
+
+void GoldenRatio::setDescription(float ratio){
+    description = "{GoldenRatio: ratio = ";
+    description.append(AlphaConverter::floatToString(ratio));
+    description += '}';
 }
 
 GoldenRatio::GoldenRatio(int start, int end, float ratio){

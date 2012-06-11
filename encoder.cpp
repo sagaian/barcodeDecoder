@@ -65,6 +65,21 @@ void Encoder::encodeRow(PixelPacket *cache, vector<int> *rowBinary){
     }
 }
 
+void Encoder::encodeRowCode39(PixelPacket *cache, vector<int> *rowBinary){
+    for(size_t row = 0; row < moduleHeight; row++){
+        for(size_t col = 0; col < ncolumns-EXTRA_MODULES; col++){
+            if(rowBinary->at(col) == 1){
+                for(size_t x = 0; x < moduleWidth; x++){
+                    PixelPacket *pixel = cache + row*(ncolumns-EXTRA_MODULES)*moduleWidth + col*moduleWidth + x;
+                    pixel->blue = 0;
+                    pixel->red = 0;
+                    pixel->green = 0;
+                }
+            }
+        }
+    }
+}
+
 void Encoder::encodeMultipleRows(PixelPacket *cache, vector<int> *binary){
     //pad sequence with zeros if necessary
     vector<int> paddedBinary;
@@ -81,8 +96,7 @@ void Encoder::encodeMultipleRows(PixelPacket *cache, vector<int> *binary){
     }
 }
 
-/* barcode starts with black and white bar, then bit pattern, then white, black bar*/
-void Encoder::EncodeBinary(vector<int> *binary, string path, BarcodeType type){
+void Encoder::EncodeBinary(vector<int> *binary, string path, BarcodeType type, bool fusion){
     //set dimensions
     size_t binarySize = binary->size();
     if(type == OneDimensional){
@@ -94,11 +108,20 @@ void Encoder::EncodeBinary(vector<int> *binary, string path, BarcodeType type){
     //create image and modules
     Image encoded(getDimensions(), "white");
     encoded.modifyImage();
-    PixelPacket *encodedPixelCache = encoded.getPixels(0,0,ncolumns*moduleWidth,nrows*moduleHeight);
-    if(type == OneDimensional){
-        encodeRow(encodedPixelCache, binary);
-    } else {
-        encodeMultipleRows(encodedPixelCache, binary);
+    PixelPacket *encodedPixelCache;
+    if(fusion){
+        encodedPixelCache = encoded.getPixels(0,0,ncolumns*moduleWidth,nrows*moduleHeight);
+    }else{
+        encodedPixelCache = encoded.getPixels(0,0,(ncolumns-EXTRA_MODULES)*moduleWidth,nrows*moduleHeight);
+    }
+    if(fusion){
+        if(type == OneDimensional){
+            encodeRow(encodedPixelCache, binary);
+        } else {
+            encodeMultipleRows(encodedPixelCache, binary);
+        }
+    }else{
+        encodeRowCode39(encodedPixelCache, binary);
     }
 
     //save changes to underlying image

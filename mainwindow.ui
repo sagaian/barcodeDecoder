@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="Encoder">
      <attribute name="title">
@@ -263,6 +263,9 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
      </widget>
      <widget class="QLabel" name="encodeErrorLabel">
       <property name="enabled">
@@ -301,13 +304,16 @@
        <string/>
       </property>
       <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
+       <enum>QFrame::WinPanel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Sunken</enum>
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="decodeButton">
@@ -357,6 +363,9 @@
       <property name="text">
        <string/>
       </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
      </widget>
      <widget class="QWidget" name="horizontalLayoutWidget_4">
       <property name="geometry">
@@ -378,7 +387,7 @@
        <item>
         <widget class="QLineEdit" name="lineEdit">
          <property name="text">
-          <string>/home/sagaian/Desktop/cs194/barcodeDecoder2/encoded.gif</string>
+          <string>/home/jose/Desktop/Final Barcode cs194/barcodeDecoder2/encoded.gif</string>
          </property>
         </widget>
        </item>
@@ -685,34 +694,12 @@
      <attribute name="title">
       <string>Analytics</string>
      </attribute>
-     <widget class="QWidget" name="layoutWidget_4">
-      <property name="geometry">
-       <rect>
-        <x>370</x>
-        <y>90</y>
-        <width>261</width>
-        <height>29</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_11">
-       <item>
-        <widget class="QLineEdit" name="directory_fusion"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="brows_fusion">
-         <property name="text">
-          <string>Browse</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
      <widget class="QLabel" name="barcode_code39">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>140</y>
-        <width>261</width>
+        <x>15</x>
+        <y>130</y>
+        <width>271</width>
         <height>211</height>
        </rect>
       </property>
@@ -732,8 +719,8 @@
      <widget class="QLabel" name="label_15">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>60</y>
+        <x>15</x>
+        <y>100</y>
         <width>91</width>
         <height>31</height>
        </rect>
@@ -750,9 +737,9 @@
      <widget class="QLabel" name="barcode_fusion">
       <property name="geometry">
        <rect>
-        <x>370</x>
-        <y>140</y>
-        <width>261</width>
+        <x>365</x>
+        <y>130</y>
+        <width>271</width>
         <height>211</height>
        </rect>
       </property>
@@ -772,8 +759,8 @@
      <widget class="QLabel" name="label_fusion">
       <property name="geometry">
        <rect>
-        <x>370</x>
-        <y>60</y>
+        <x>365</x>
+        <y>100</y>
         <width>151</width>
         <height>31</height>
        </rect>
@@ -790,9 +777,9 @@
      <widget class="QLabel" name="label_code39_length">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>390</y>
-        <width>71</width>
+        <x>15</x>
+        <y>380</y>
+        <width>261</width>
         <height>31</height>
        </rect>
       </property>
@@ -803,9 +790,9 @@
      <widget class="QLabel" name="label_fusion_length">
       <property name="geometry">
        <rect>
-        <x>370</x>
-        <y>390</y>
-        <width>71</width>
+        <x>365</x>
+        <y>380</y>
+        <width>261</width>
         <height>31</height>
        </rect>
       </property>
@@ -816,28 +803,62 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>90</y>
-        <width>261</width>
+        <x>15</x>
+        <y>40</y>
+        <width>611</width>
         <height>29</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="label_code39">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <widget class="QLineEdit" name="directory_code39">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
+        <widget class="QLineEdit" name="Analytics_Input"/>
+       </item>
+       <item>
+        <widget class="QComboBox" name="Analytics_modeSelection">
+         <item>
+          <property name="text">
+           <string>Numeric</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Alpha</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AlphaNumeric</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="browse_code39">
+        <widget class="QPushButton" name="Analytics_EncodeButton">
          <property name="text">
-          <string>Browse</string>
+          <string>Encode</string>
          </property>
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QLabel" name="Analytics_encodeErrorLabel">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>560</y>
+        <width>131</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string>CANNOT ENCODE</string>
+      </property>
      </widget>
     </widget>
    </widget>
