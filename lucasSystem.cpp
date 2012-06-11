@@ -5,7 +5,7 @@ using namespace std;
 void Lucas::initList(vector<float> *list, int p, int q){
     //Any p-Fibonacci sequence begins with 0 followed by p+1 1's and 2.
     list->push_back(0);
-    list->push_back(p+1);
+    list->push_back(2);
     for(int i = 0; i < (p+q); i++){
         list->push_back(1);
     }

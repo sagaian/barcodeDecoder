@@ -29,7 +29,7 @@ bool numberSystemWidget::isValidSystem(){
     int qValue = ui->qValue->text().toInt();
     if(pValue == 0 && ui->pValue->text().toStdString().compare("0") != 0) return false; //conversion to int failed
     if(qValue == 0 && ui->qValue->text().toStdString().compare("0") != 0) return false; //conversion to int failed
-    if(pValue < 0 || qValue < 0 || pValue > MAX_P || qValue > MAX_Q) return false; //if values are negative, system is invalid
+    if(pValue < 0 || qValue < 0 || pValue > 9 || qValue > 9) return false; //if values are negative, system is invalid
     return true;
 }
 

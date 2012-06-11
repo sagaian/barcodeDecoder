@@ -84,7 +84,7 @@ void MainWindow::getDefaultSystem(NumberSystem *sys, int upperLimit){
 //pin must be multiple of PIN_CHUNK and made up of integer values
 bool MainWindow::isValidPin(string pin){
     size_t pinLen = pin.size();
-    if(pinLen % PIN_CHUNK != 0) return false;
+    if(pinLen % PIN_CHUNK != 0 || pinLen > (MAX_SYSTEMS_SECURE*PIN_CHUNK)) return false;
     for(size_t i = 0; i < pinLen; i++){
         if(!isdigit(pin.at(i))) return false;
         if(i % PIN_CHUNK == 0 && (pin.at(i)-'0') >= NUM_SYSTEMS) return false;

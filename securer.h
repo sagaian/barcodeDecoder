@@ -9,7 +9,7 @@
 #define MIN_P 1
 #define MIN_Q 0
 #define MAX_P 9 //values of p up to and including MAX_P, i.e MAX_P = 2 allows p = 0,1,2
-#define MAX_Q 5 //values of q up to and including MAX_Q
+#define MAX_Q 9 //values of q up to and including MAX_Q
 #define PIN_CHUNK 3
 
 class Securer{
